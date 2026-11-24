@@ -124,7 +124,7 @@ on conflict (slug) do nothing;
 insert into public.site_settings (key, value) values
   ('whatsapp_number', '6283843081428'),
   ('hero_title', 'Memory of Lens'),
-  ('hero_subtitle', 'Dokumentasi foto & video untuk wedding, prewedding, lamaran, hingga hari bahagia kecilmu — dari Kendal sampai Semarang.'),
+  ('hero_subtitle', 'Dokumentasi foto & video untuk wedding, prewedding, lamaran, hingga hari bahagia kecilmu di Kendal, Semarang, dan sekitarnya.'),
   ('instagram_url', 'https://www.instagram.com/efgraphy.id/'),
   ('tiktok_url', 'https://www.tiktok.com/@efgraphy.id'),
   ('address', 'Jl. KH. Mukhsin, RT.02/RW.08, Tegolayang, Tegorejo, Kec. Pegandon, Kab. Kendal, Jawa Tengah 51357'),

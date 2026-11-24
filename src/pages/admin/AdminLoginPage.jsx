@@ -131,7 +131,7 @@ export default function AdminLoginPage() {
         </form>
       </div>
 
-      <p className="text-center text-xs text-ink-3">© {new Date().getFullYear()} Efgraphy.id — Memory of Lens</p>
+      <p className="text-center text-xs text-ink-3">© {new Date().getFullYear()} Efgraphy.id · Memory of Lens</p>
     </div>
   )
 }

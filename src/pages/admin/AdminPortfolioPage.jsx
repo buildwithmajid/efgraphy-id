@@ -223,7 +223,7 @@ export default function AdminPortfolioPage() {
                     <span className="mt-2 text-sm font-medium text-ink">
                       {uploading ? 'Mengompres & mengunggah…' : 'Pilih foto dari perangkat'}
                     </span>
-                    <span className="mt-1 text-xs text-ink-3">JPG, PNG, WebP — otomatis dikompres agar cepat</span>
+                    <span className="mt-1 text-xs text-ink-3">JPG, PNG, WebP (otomatis dikompres agar ringan)</span>
                     <input
                       ref={fileInputRef}
                       type="file"

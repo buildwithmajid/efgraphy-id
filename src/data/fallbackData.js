@@ -9,7 +9,7 @@ export const fallbackSettings = {
   whatsapp_number: '6283843081428',
   hero_title: 'Memory of Lens',
   hero_subtitle:
-    'Dokumentasi foto & video untuk wedding, prewedding, lamaran, hingga hari bahagia kecilmu — dari Kendal sampai Semarang.',
+    'Dokumentasi foto & video untuk wedding, prewedding, lamaran, hingga hari bahagia kecilmu di Kendal, Semarang, dan sekitarnya.',
   instagram_url: 'https://www.instagram.com/efgraphy.id/',
   tiktok_url: 'https://www.tiktok.com/@efgraphy.id',
   address: 'Jl. KH. Mukhsin, RT.02/RW.08, Tegolayang, Tegorejo, Kec. Pegandon, Kab. Kendal, Jawa Tengah 51357',
@@ -28,7 +28,7 @@ export const fallbackCategories = [
 
 export const fallbackPortfolios = [
   { id: 'pf-1', category_id: 'cat-wedding', title: 'Ngunduh Mantu Susanto & Uswatun', location: 'Kendal', image_url: '/portfolio/wedding-1.jpg', is_featured: true, sort_order: 1 },
-  { id: 'pf-2', category_id: 'cat-wedding', title: 'Bridal Preparation — Nia & Fatkhurrohim', location: 'Kendal', image_url: '/portfolio/wedding-2.jpg', is_featured: true, sort_order: 2 },
+  { id: 'pf-2', category_id: 'cat-wedding', title: 'Bridal Preparation Nia & Fatkhurrohim', location: 'Kendal', image_url: '/portfolio/wedding-2.jpg', is_featured: true, sort_order: 2 },
   { id: 'pf-3', category_id: 'cat-prewedding', title: 'Prewedding Meirta & Aji', location: 'Kota Lama, Semarang', image_url: '/portfolio/prewedding-1.jpg', is_featured: true, sort_order: 3 },
   { id: 'pf-4', category_id: 'cat-prewedding', title: 'Outdoor Pine Forest Prewedding', location: 'Semarang · Kendal', image_url: '/portfolio/prewedding-2.jpg', is_featured: true, sort_order: 4 },
   { id: 'pf-5', category_id: 'cat-engagement', title: 'Engagement Day Anas & Zafira', location: 'Gringsing, Batang', image_url: '/portfolio/engagement-1.jpg', is_featured: true, sort_order: 5 },
@@ -97,7 +97,7 @@ export const fallbackTestimonials = [
     id: 'ts-1',
     client_name: 'Indah (@indaharsm)',
     event_type: 'Wedding · Foto & Video',
-    quote: 'New journey, forever adventure. Terima kasih buat tangan-tangan ajaibnya — Foto & Video by @efgraphy.id.',
+    quote: 'New journey, forever adventure. Terima kasih buat tangan-tangan ajaibnya, Foto & Video by @efgraphy.id.',
     is_active: true,
   },
   {
@@ -113,7 +113,7 @@ export const fallbackVideos = [
   {
     id: 'vid-1',
     category_id: 'cat-wedding',
-    title: 'On Wedding — Difa & Wahyu',
+    title: 'On Wedding Difa & Wahyu',
     video_url: 'https://www.instagram.com/efgraphy.id/reel/DYePzaXyy5P/',
     thumbnail_url: '/portfolio/wedding-1.jpg',
     aspect_ratio: 'vertical',
@@ -126,7 +126,7 @@ export const fallbackVideos = [
   {
     id: 'vid-2',
     category_id: 'cat-wedding',
-    title: 'Bridal Preparation — In Preparation',
+    title: 'Bridal Preparation (In Preparation)',
     video_url: 'https://www.instagram.com/efgraphy.id/reel/DKeLVhCvT_p/',
     thumbnail_url: '/portfolio/wedding-2.jpg',
     aspect_ratio: 'vertical',
@@ -139,7 +139,7 @@ export const fallbackVideos = [
   {
     id: 'vid-3',
     category_id: 'cat-event',
-    title: 'Tedhak Siten Cinematic — Kayla Celine',
+    title: 'Tedhak Siten Cinematic Kayla Celine',
     video_url: 'https://www.instagram.com/efgraphy.id/reel/DDDvnVYTy9F/',
     thumbnail_url: '/portfolio/tedhaksiten-1.jpg',
     aspect_ratio: 'vertical',
@@ -152,7 +152,7 @@ export const fallbackVideos = [
   {
     id: 'vid-4',
     category_id: 'cat-wedding',
-    title: 'Wedding Highlight — Semarang Coverage',
+    title: 'Wedding Highlight Semarang Coverage',
     video_url: 'https://www.tiktok.com/@efgraphy.id/video/7651975546708004117',
     thumbnail_url: '/portfolio/prewedding-1.jpg',
     aspect_ratio: 'vertical',
@@ -165,7 +165,7 @@ export const fallbackVideos = [
   {
     id: 'vid-5',
     category_id: 'cat-wedding',
-    title: 'Photo After "Sah" — Wedding Akad',
+    title: 'Photo After "Sah" (Wedding Akad)',
     video_url: 'https://www.instagram.com/efgraphy.id/reel/DVLFKPgk4Ha/',
     thumbnail_url: '/portfolio/engagement-1.jpg',
     aspect_ratio: 'vertical',

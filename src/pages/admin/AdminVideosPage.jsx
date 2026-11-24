@@ -290,7 +290,7 @@ export default function AdminVideosPage() {
                   required
                   value={form.title}
                   onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))}
-                  placeholder="Contoh: Wedding Highlight — Kendal"
+                  placeholder="Contoh: Wedding Highlight Kendal"
                   className="mt-1.5 block min-h-11 w-full rounded-lg border border-sand bg-cream/40 px-3.5 text-sm text-ink focus:border-ink focus:bg-paper focus:outline-none"
                 />
               </div>

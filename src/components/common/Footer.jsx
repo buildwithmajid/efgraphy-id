@@ -108,7 +108,7 @@ export default function Footer({ settings, onReplayIntro }) {
         </div>
 
         <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-sand pt-6 text-[13px] text-ink-3">
-          <span>© {new Date().getFullYear()} Efgraphy.id — Memory of Lens.</span>
+          <span>© {new Date().getFullYear()} Efgraphy.id · Memory of Lens</span>
           {onReplayIntro && (
             <button
               type="button"

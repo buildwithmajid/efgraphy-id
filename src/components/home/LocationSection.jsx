@@ -15,7 +15,7 @@ export default function LocationSection({ settings }) {
             Berbasis di Kendal, siap hadir hingga Semarang &amp; sekitarnya.
           </h2>
           <p className="mt-5 text-[15px] leading-relaxed text-ink-2">
-            Acara kamu di luar Kendal? Tenang — tim Efgraphy.id rutin melayani pemotretan di Semarang, Batang,
+            Acara kamu di luar Kendal? Tenang, tim Efgraphy.id rutin melayani pemotretan di Semarang, Batang,
             Pekalongan, hingga area Jawa Tengah lainnya.
           </p>
 

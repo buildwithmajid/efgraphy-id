@@ -82,7 +82,7 @@ export default function AdminDashboardPage() {
           >
             <p className="text-xs font-medium text-ink-2">{item.label}</p>
             <p className="mt-2 text-3xl font-semibold tracking-tight text-ink tabular-nums">
-              {loading ? '—' : item.value}
+              {loading ? '...' : item.value}
             </p>
             <p className="mt-1 text-xs text-ink-3">{item.sub}</p>
           </Link>
