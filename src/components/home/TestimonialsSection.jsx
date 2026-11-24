@@ -4,7 +4,7 @@ export default function TestimonialsSection({ testimonials, settings }) {
   if (!testimonials?.length) return null
 
   return (
-    <section className="border-t border-sand bg-cream-alt/55 py-20 sm:py-28">
+    <section className="border-t border-sand bg-cream-alt/55 py-14 sm:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <h2 className="max-w-[15ch] font-serif text-[clamp(2.1rem,4.6vw,3.3rem)] font-medium leading-[1.08] tracking-[-0.015em] text-ink">

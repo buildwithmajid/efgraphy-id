@@ -67,7 +67,7 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
   const currentItem = items[active]
 
   return (
-    <section className="relative overflow-hidden bg-obsidian py-24 text-cream sm:py-32">
+    <section className="relative overflow-hidden bg-obsidian py-16 text-cream sm:py-24">
       {/* Cahaya studio redup di belakang galeri 3D */}
       <div
         aria-hidden="true"

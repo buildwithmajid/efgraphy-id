@@ -63,7 +63,7 @@ export default function PortfolioPage({ onReplayIntro }) {
     <div className="min-h-dvh overflow-x-clip bg-cream text-ink">
       <Navbar settings={settings} />
 
-      <main className="mx-auto max-w-7xl px-5 pt-32 pb-24 sm:px-8 sm:pt-40">
+      <main className="mx-auto max-w-7xl px-5 pt-24 pb-20 sm:px-8 sm:pt-28">
         <Link
           to="/"
           className="inline-flex items-center gap-2 text-[13px] font-medium text-ink-2 transition-colors hover:text-ink"

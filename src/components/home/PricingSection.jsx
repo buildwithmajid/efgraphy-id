@@ -5,7 +5,7 @@ import { buildWaLink, formatRupiah, WA_MESSAGES } from '../../lib/whatsapp'
 
 export default function PricingSection({ packages, settings }) {
   return (
-    <section id="pricelist" className="scroll-mt-24 border-t border-sand bg-cream py-20 sm:py-28">
+    <section id="pricelist" className="scroll-mt-12 border-t border-sand bg-cream py-14 sm:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <h2 className="max-w-[16ch] font-serif text-[clamp(2.2rem,5vw,3.5rem)] font-medium leading-[1.06] tracking-[-0.015em] text-ink">
@@ -17,7 +17,7 @@ export default function PricingSection({ packages, settings }) {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {packages.map((pkg, idx) => {
             const isPopular = Boolean(pkg.is_popular)
             const isStartFrom = pkg.price_mode === 'start_from' && pkg.starting_price

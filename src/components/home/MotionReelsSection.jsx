@@ -8,7 +8,7 @@ export default function MotionReelsSection({ videos, categoryMap, onSelectVideo 
   if (!videos?.length) return null
 
   return (
-    <section className="border-t border-cream/10 bg-obsidian pb-24 pt-20 text-cream sm:pb-32 sm:pt-24">
+    <section className="border-t border-cream/10 bg-obsidian pb-20 pt-16 text-cream sm:pb-24 sm:pt-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
