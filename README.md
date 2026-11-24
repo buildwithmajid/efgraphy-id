@@ -29,7 +29,7 @@ Website Company Profile, Portofolio 3D Interaktif, Direct WhatsApp Booking, dan 
 - [x] **Fase 2:** Panggung **Kamera 3D Prosedural** (putar 360° interaktif mengikuti kursor + detail panel belakang) dengan animasi balik lurus ke depan → kilatan *starburst* flash dari kamera → layar putih *glitch* & blur → masuk ke website utama.
 - [x] **Fase 3:** Halaman Publik 3D Editorial lengkap (Hero Z-Depth, 4 Layanan 3D Tilt, 3D Curved Portfolio Showcase, `/portfolio` + Lightbox, Pricelist Hybrid, Testimoni, Google Maps).
 - [x] **Fase 4:** Admin Panel / CMS (`/admin`) lengkap — Login Supabase Auth (+ Mode Demo Lokal), Dashboard, CRUD Portofolio dengan auto-kompresi WebP, CRUD Paket Hybrid, CRUD Testimoni, dan Pengaturan Website.
-- [ ] **Fase 5:** Integrasi aset foto asli, optimasi akhir, & deployment ke Vercel.
+- [x] **Fase 5:** Integrasi aset karya asli `@efgraphy.id`, setup Supabase Cloud (Auth, PostgreSQL, Storage, RLS), dan deployment produksi live di **https://efgraphy-id.vercel.app/**.
 
 ---
 

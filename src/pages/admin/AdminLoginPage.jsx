@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Lock } from 'lucide-react'
+import { ArrowLeft, Eye, EyeOff, Lock } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 
 export default function AdminLoginPage() {
   const { user, signIn, signInDemo, isSupabaseConfigured } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const navigate = useNavigate()
@@ -90,16 +91,27 @@ export default function AdminLoginPage() {
             <label htmlFor="admin-password" className="block text-xs font-medium text-ink">
               Password
             </label>
-            <input
-              id="admin-password"
-              type="password"
-              required
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="mt-1.5 block min-h-11 w-full rounded-lg border border-sand bg-cream/50 px-3.5 text-sm text-ink placeholder:text-ink-3 focus:border-ink focus:bg-paper focus:outline-none"
-            />
+            <div className="relative mt-1.5">
+              <input
+                id="admin-password"
+                type={showPassword ? 'text' : 'password'}
+                required
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="block min-h-11 w-full rounded-lg border border-sand bg-cream/50 pl-3.5 pr-11 text-sm text-ink placeholder:text-ink-3 focus:border-ink focus:bg-paper focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? 'Sembunyikan password' : 'Tampilkan password'}
+                aria-pressed={showPassword}
+                className="absolute inset-y-0 right-0 grid w-11 place-items-center text-ink-3 transition-colors hover:text-ink"
+              >
+                {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+              </button>
+            </div>
           </div>
 
           {error && (

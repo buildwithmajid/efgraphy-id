@@ -18,7 +18,7 @@ export default function Footer({ settings, onReplayIntro }) {
 
   return (
     <footer className="border-t border-sand bg-cream-alt/70">
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+      <div className="mx-auto max-w-7xl px-5 pt-16 pb-24 sm:px-8 sm:pb-16">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
             <div className="flex items-center gap-3">

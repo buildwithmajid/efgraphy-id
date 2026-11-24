@@ -62,7 +62,7 @@ export default function HomePage({ revealed, onReplayIntro }) {
   )
 
   return (
-    <div className="min-h-dvh bg-cream text-ink">
+    <div className="min-h-dvh overflow-x-clip bg-cream text-ink">
       <Navbar settings={settings} />
 
       <main>

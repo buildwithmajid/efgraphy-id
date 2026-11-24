@@ -11,7 +11,16 @@ import { ArrowUpRight, ChevronLeft, ChevronRight, Expand } from 'lucide-react'
 export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox }) {
   const [active, setActive] = useState(0)
   const [dragOffset, setDragOffset] = useState(0)
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 640 : false,
+  )
   const dragRef = useRef({ active: false, startX: 0, moved: false })
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   const count = items.length
 
@@ -101,8 +110,9 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
             if (abs > 2.8) return null
 
             const isCenter = idx === active
-            const translateX = shifted * 250
-            const translateZ = -Math.pow(abs, 1.3) * 145
+            const stepX = isMobile ? 185 : 250
+            const translateX = shifted * stepX
+            const translateZ = -Math.pow(abs, 1.3) * (isMobile ? 120 : 145)
             const rotateY = shifted * -24
             const scale = Math.max(0.72, 1 - abs * 0.13)
             const opacity = Math.max(0.18, 1 - abs * 0.34)

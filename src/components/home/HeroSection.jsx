@@ -147,17 +147,17 @@ export default function HeroSection({ settings, portfolios, revealed }) {
               transform: `perspective(1200px) translate3d(${(mouse.x * 16).toFixed(1)}px, ${(mouse.y * 12).toFixed(1)}px, 20px) rotateY(${(mouse.x * 12).toFixed(1)}deg) rotateX(${(-mouse.y * 8).toFixed(1)}deg)`,
               transition: 'transform 220ms cubic-bezier(0.22, 1, 0.36, 1)',
             }}
-            className="relative z-10 w-[56%] overflow-hidden rounded-sm border border-paper bg-paper p-2 shadow-[0_36px_80px_-28px_rgba(24,23,22,0.35)]"
+            className="relative z-10 w-[58%] overflow-hidden rounded-sm border border-paper bg-paper p-2 shadow-[0_36px_80px_-28px_rgba(24,23,22,0.35)] sm:w-[56%]"
           >
+            <div className="flex items-center justify-between px-1 pb-1.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-3 sm:text-[10px]">
+              <span>EFGRAPHY · 35MM</span>
+              <span>ƒ/1.4</span>
+            </div>
             <img
               src={heroPrimary}
               alt="Dokumentasi wedding adat Jawa oleh Efgraphy.id"
               className="aspect-[3/4] w-full object-cover"
             />
-            <div className="flex items-center justify-between px-1 pt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-3">
-              <span>EFGRAPHY · 35MM</span>
-              <span>ƒ/1.4</span>
-            </div>
           </motion.div>
 
           {/* Lapisan Depan Kanan Bawah (Floating 3D Z-plane) */}
@@ -167,7 +167,7 @@ export default function HeroSection({ settings, portfolios, revealed }) {
               transform: `perspective(1200px) translate3d(${(mouse.x * 32).toFixed(1)}px, ${(mouse.y * 24).toFixed(1)}px, 80px) rotateY(${(12 + mouse.x * 14).toFixed(1)}deg) rotateZ(3deg)`,
               transition: 'transform 180ms cubic-bezier(0.22, 1, 0.36, 1)',
             }}
-            className="absolute bottom-4 right-0 z-20 w-[42%] overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_28px_60px_-22px_rgba(24,23,22,0.32)] sm:bottom-6 sm:right-2"
+            className="absolute bottom-2 right-1 z-20 w-[38%] overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_28px_60px_-22px_rgba(24,23,22,0.32)] sm:bottom-6 sm:right-2 sm:w-[42%]"
           >
             <img
               src={heroSecondary}

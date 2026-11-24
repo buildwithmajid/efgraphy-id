@@ -266,6 +266,7 @@ export default function CameraScene({ phaseRef, reducedMotion, onCameraClick, on
   return (
     <Canvas
       className="!absolute inset-0"
+      style={{ touchAction: 'none' }}
       dpr={[1, 1.75]}
       camera={{ position: [0, MODEL_CENTER_Y, BASE_DISTANCE], fov: FOV, near: 0.05, far: 60 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}

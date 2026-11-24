@@ -60,7 +60,7 @@ export default function PortfolioPage({ onReplayIntro }) {
   const isVideoTab = activeTab === 'videos'
 
   return (
-    <div className="min-h-dvh bg-cream text-ink">
+    <div className="min-h-dvh overflow-x-clip bg-cream text-ink">
       <Navbar settings={settings} />
 
       <main className="mx-auto max-w-7xl px-5 pt-32 pb-24 sm:px-8 sm:pt-40">
@@ -86,14 +86,14 @@ export default function PortfolioPage({ onReplayIntro }) {
         <div
           role="tablist"
           aria-label="Filter kategori portofolio"
-          className="mt-10 flex flex-wrap items-center gap-2 border-b border-sand pb-6"
+          className="-mx-5 mt-10 flex flex-nowrap items-center gap-2 overflow-x-auto border-b border-sand px-5 pb-4 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-6"
         >
           <button
             type="button"
             role="tab"
             aria-selected={activeTab === 'all'}
             onClick={() => selectTab('all')}
-            className={`relative min-h-10 rounded-full px-4 text-[13px] font-medium transition-colors ${
+            className={`relative min-h-10 shrink-0 whitespace-nowrap rounded-full px-4 text-[13px] font-medium transition-colors ${
               activeTab === 'all' ? 'text-cream' : 'text-ink-2 hover:text-ink'
             }`}
           >
@@ -116,7 +116,7 @@ export default function PortfolioPage({ onReplayIntro }) {
                 role="tab"
                 aria-selected={selected}
                 onClick={() => selectTab(cat.id)}
-                className={`relative min-h-10 rounded-full px-4 text-[13px] font-medium transition-colors ${
+                className={`relative min-h-10 shrink-0 whitespace-nowrap rounded-full px-4 text-[13px] font-medium transition-colors ${
                   selected ? 'text-cream' : 'text-ink-2 hover:text-ink'
                 }`}
               >
@@ -137,7 +137,7 @@ export default function PortfolioPage({ onReplayIntro }) {
             role="tab"
             aria-selected={isVideoTab}
             onClick={() => selectTab('videos')}
-            className={`relative inline-flex min-h-10 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium transition-colors ${
+            className={`relative inline-flex min-h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-4 text-[13px] font-medium transition-colors ${
               isVideoTab ? 'text-cream' : 'text-ink-2 hover:text-ink'
             }`}
           >

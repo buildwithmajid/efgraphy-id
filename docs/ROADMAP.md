@@ -32,7 +32,7 @@ Panduan bertahap pembangunan website **Efgraphy.id** dengan pengalaman **3D Came
 - [x] Bangun **CRUD Testimoni** dan **Pengaturan Website** (nomor WA, teks Hero, link sosmed).
 
 ## Fase 5 — Integrasi Aset Asli, Optimasi 3D & Peluncuran
-- [ ] Setup project Supabase, jalankan `supabase/schema.sql`, buat akun admin owner, dan isi `.env`.
-- [ ] Pasang file logo resmi `public/logo.png` dan unggah foto portofolio asli dari owner melalui Admin Panel.
-- [ ] Verifikasi visual & performa di Desktop + Mobile (60fps, WebGL unmount saat off-screen, `prefers-reduced-motion`, uji semua link WhatsApp).
-- [ ] Deploy ke Vercel + tambahkan `vercel.json` + hubungkan domain `efgraphy.id`.
+- [x] Setup project Supabase (`efgraphy-id`), jalankan `supabase/schema.sql` & data awal, buat akun admin owner (`admin@efgraphy.id`), nonaktifkan *public sign-up*, dan isi `.env`.
+- [x] Pasang logo resmi (`public/logo-*.png`) serta 8 foto karya asli `@efgraphy.id` (`public/portfolio/`) dan 5 link Video & Reels.
+- [x] Verifikasi visual, performa 3D, dan koneksi live Supabase di website produksi (zero console errors).
+- [x] Deploy ke Vercel (`https://efgraphy-id.vercel.app/`) dengan `vercel.json` SPA routing — siap dihubungkan ke domain `efgraphy.id`.
