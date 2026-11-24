@@ -1,0 +1,38 @@
+# Implementation Roadmap — Efgraphy.id (3D Interactive Editorial)
+
+Panduan bertahap pembangunan website **Efgraphy.id** dengan pengalaman **3D Camera Intro**, **Interactive 3D Portfolio**, **Direct WhatsApp Booking**, dan **Supabase CMS**.
+
+---
+
+## Fase 1 — Fondasi Proyek, 3D Stack & Sistem Desain
+- [x] Inisialisasi proyek **React + Vite (JavaScript)** dan instalasi dependensi (`tailwindcss`, `react-router-dom`, `lucide-react`, `@supabase/supabase-js`, `three`, `@react-three/fiber`, `@react-three/drei`, `framer-motion`).
+- [x] Konfigurasi tema Tailwind & token warna/tipografi sesuai `DESIGN.md` (*Cormorant Garamond*, *Plus Jakarta Sans*, *JetBrains Mono*).
+- [x] Pasang meta SEO, Open Graph, dan JSON-LD LocalBusiness di `index.html`.
+- [x] Buat helper `whatsapp.js`, `shutterSound.js` (Web Audio API), konfigurasi `supabase.js`, data awal `fallbackData.js`, dan `supabase/schema.sql`.
+
+## Fase 2 — 3D Camera Intro & Shutter "Cekrek" Experience
+- [x] Bangun model **Kamera 3D Prosedural** (`CameraModel.jsx`) di React Three Fiber (bodi matte charcoal/leatherette, ring lensa champagne metalik, elemen kaca lensa berlapis, studio rim lighting, pointer-follow inertia).
+- [x] Bangun **Camera Viewfinder HUD** (`f/1.4 · 1/250s · ISO 100`, fokus reticle, tombol `Tekan rana untuk masuk` & `Lewati intro`).
+- [x] Bangun **Animasi Transisi "Cekrek"** (3D zoom-in ke lensa → *shutter iris blade* + *white flash* + suara klik shutter halus → reveal ke halaman utama + manajemen `sessionStorage`).
+
+## Fase 3 — Website Publik 3D Editorial & Direct WhatsApp
+- [ ] Bangun layout global: **Floating Glass Editorial Navbar** (responsif + logo), **Footer** (termasuk tombol *Replay 3D Intro*), dan **Floating WhatsApp Button**.
+- [ ] Bangun **Hero Editorial Z-Depth Weaving** (tipografi *Memory of Lens* + kartu foto berperspektif melayang di depan/belakang teks + lens reticle SVG).
+- [ ] Bangun **Trust & Coverage Strip** (Sejak 2019 · Free Konsultasi · Kendal–Semarang–Batang–Pekalongan).
+- [ ] Bangun **4 Layanan Utama dengan 3D Tilt Cards** (Wedding, Prewedding, Engagement, Birthday/Wisuda) + Direct WhatsApp CTA.
+- [ ] Bangun **3D Curved Arc Portfolio Showcase** di Beranda (drag/klik 3D carousel + depth-of-field + status bar `DRAG · CLICK  01 / 08`).
+- [ ] Bangun **Halaman Galeri Portofolio (`/portfolio`)** dengan filter kategori, **3D Magnetic Tilt Cards**, dan **Lightbox Modal** layar penuh.
+- [ ] Bangun **Section Pricelist Hybrid** (`Mulai dari Rp...` & `Request Pricelist via WA`), **Testimoni**, dan **Lokasi Google Maps**.
+
+## Fase 4 — Admin Panel / CMS (`/admin`)
+- [ ] Bangun **AuthContext**, **ProtectedRoute**, dan halaman **Login Admin (`/admin/login`)**.
+- [ ] Bangun **Admin Dashboard** & navigasi sidebar.
+- [ ] Bangun **CRUD Portofolio** dengan fitur upload gambar ke Supabase Storage + preview instan.
+- [ ] Bangun **CRUD Paket & Pricelist** (toggle `Mulai dari Rp...` vs `Request Pricelist`, daftar fitur, & template pesan WA).
+- [ ] Bangun **CRUD Testimoni** dan **Pengaturan Website** (nomor WA, teks Hero, link sosmed).
+
+## Fase 5 — Integrasi Aset Asli, Optimasi 3D & Peluncuran
+- [ ] Setup project Supabase, jalankan `supabase/schema.sql`, buat akun admin owner, dan isi `.env`.
+- [ ] Pasang file logo resmi `public/logo.png` dan unggah foto portofolio asli dari owner melalui Admin Panel.
+- [ ] Verifikasi visual & performa di Desktop + Mobile (60fps, WebGL unmount saat off-screen, `prefers-reduced-motion`, uji semua link WhatsApp).
+- [ ] Deploy ke Vercel + tambahkan `vercel.json` + hubungkan domain `efgraphy.id`.
