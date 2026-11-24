@@ -13,11 +13,10 @@ export default function MotionReelsSection({ videos, categoryMap, onSelectVideo 
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
             <h2 className="max-w-[16ch] font-serif text-[clamp(2.1rem,4.8vw,3.4rem)] font-medium leading-[1.06] tracking-[-0.015em] text-cream">
-              Cerita yang hidup dalam <em className="font-normal text-champagne">gerak</em> &amp; suara.
+              Highlight <em className="font-normal text-champagne">video</em> &amp; Reels pilihan.
             </h2>
             <p className="mt-3 max-w-[48ch] text-[15px] leading-relaxed text-cream/65">
-              Selain foto, kami menghadirkan cinematic highlight, wedding teaser, hingga Reels vertikal siap tayang
-              untuk Instagram dan TikTok.
+              Wedding teaser, dokumentasi acara, hingga Reels vertikal siap tayang untuk Instagram dan TikTok.
             </p>
           </div>
 

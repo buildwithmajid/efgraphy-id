@@ -300,11 +300,10 @@ export default function PortfolioPage({ onReplayIntro }) {
         {/* CTA Bawah Galeri */}
         <div className="mt-20 rounded-sm border border-sand bg-obsidian p-8 text-center text-cream sm:p-12">
           <h2 className="font-serif text-3xl font-medium sm:text-4xl">
-            Punya konsep foto &amp; video impian untuk acaramu?
+            Sudah punya tanggal atau konsep acara?
           </h2>
           <p className="mx-auto mt-3 max-w-[48ch] text-sm leading-relaxed text-cream/70">
-            Ceritakan tanggal, lokasi, dan suasana yang kamu bayangkan. Konsultasi gratis langsung bersama tim
-            Efgraphy.id.
+            Boleh langsung ngobrol dulu soal lokasi, konsep, atau cek ketersediaan jadwal. Konsultasi gratis.
           </p>
           <a
             href={buildWaLink(WA_MESSAGES.consult, settings?.whatsapp_number)}

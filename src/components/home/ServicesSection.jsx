@@ -37,7 +37,7 @@ export default function ServicesSection({ categories, portfolios, packages, sett
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <h2 className="max-w-[16ch] font-serif text-[clamp(2.2rem,5vw,3.5rem)] font-medium leading-[1.06] tracking-[-0.015em] text-ink">
-            Layanan dokumentasi untuk setiap babak cerita.
+            Layanan foto &amp; video untuk hari spesialmu.
           </h2>
           <p className="max-w-[40ch] text-[15px] leading-relaxed text-ink-2">
             Dari prosesi sakral hingga perayaan hangat bersama keluarga. Konsultasi konsep dan lokasi gratis sebelum

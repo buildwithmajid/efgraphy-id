@@ -49,8 +49,8 @@ export default function AdminLoginPage() {
         <div className="flex items-center gap-3">
           <img src="/logo-mark-dark.png" alt="" className="h-9 w-auto" />
           <div>
-            <h1 className="font-serif text-2xl font-medium text-ink">Admin Panel Efgraphy.id</h1>
-            <p className="text-xs text-ink-3">Kelola foto portofolio, paket harga, dan pengaturan website</p>
+            <h1 className="font-serif text-2xl font-medium text-ink">Masuk Pengelola</h1>
+            <p className="text-xs text-ink-3">Kelola galeri foto, video, paket, dan info studio</p>
           </div>
         </div>
 
@@ -82,7 +82,7 @@ export default function AdminLoginPage() {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="owner@efgraphy.id"
+              placeholder="admin@efgraphy.id"
               className="mt-1.5 block min-h-11 w-full rounded-lg border border-sand bg-cream/50 px-3.5 text-sm text-ink placeholder:text-ink-3 focus:border-ink focus:bg-paper focus:outline-none"
             />
           </div>
@@ -126,7 +126,7 @@ export default function AdminLoginPage() {
             className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-ink px-4 text-sm font-medium text-cream transition-colors hover:bg-wa disabled:cursor-not-allowed disabled:opacity-45"
           >
             <Lock className="size-4" />
-            {submitting ? 'Memproses…' : 'Masuk dengan Akun Supabase'}
+            {submitting ? 'Memproses…' : 'Masuk'}
           </button>
         </form>
       </div>

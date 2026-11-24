@@ -65,7 +65,7 @@ export default function AdminLayout() {
             <img src="/logo-mark-dark.png" alt="" className="h-7 w-auto" />
             <div>
               <p className="text-sm font-semibold leading-none text-ink">efgraphy.id</p>
-              <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-3">Admin CMS</p>
+              <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-3">Studio Admin</p>
             </div>
           </Link>
 
@@ -76,7 +76,7 @@ export default function AdminLayout() {
           <div className="rounded-lg bg-cream-alt px-3 py-2.5">
             <p className="truncate text-xs font-medium text-ink">{user?.email}</p>
             <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-ink-3">
-              {isSupabaseConfigured ? '● Supabase Aktif' : '● Mode Demo Lokal'}
+              {isSupabaseConfigured ? '● Terhubung' : '● Mode Demo Lokal'}
             </p>
           </div>
           <div className="flex items-center gap-2">

@@ -50,9 +50,9 @@ export default function AdminDashboardPage() {
     <div className="space-y-8">
       <div className="flex flex-wrap items-end justify-between gap-4 border-b border-sand pb-6">
         <div>
-          <h1 className="font-serif text-3xl font-medium text-ink sm:text-4xl">Dashboard CMS</h1>
+          <h1 className="font-serif text-3xl font-medium text-ink sm:text-4xl">Ringkasan Studio</h1>
           <p className="mt-1 text-sm text-ink-2">
-            Kelola galeri foto, paket harga, testimoni, dan nomor WhatsApp Efgraphy.id dari satu tempat.
+            Kelola galeri foto, video, paket harga, testimoni, dan nomor WhatsApp Efgraphy.id.
           </p>
         </div>
         {!isSupabaseConfigured && (
@@ -101,14 +101,14 @@ export default function AdminDashboardPage() {
           },
           {
             title: 'Kelola Video & Reels',
-            desc: 'Tempel link TikTok, Instagram Reels, atau YouTube Highlight + cover thumbnail untuk section Motion & Reels.',
+            desc: 'Upload klip MP4 pendek atau tempel link YouTube, Instagram Reels, dan TikTok untuk halaman depan.',
             to: '/admin/videos',
             icon: Film,
             action: 'Kelola Video',
           },
           {
-            title: 'Atur Paket & Mode Harga Hybrid',
-            desc: 'Ubah nominal "Mulai dari Rp..." atau ubah paket menjadi "Request Pricelist", atur fitur & pesan WA khusus.',
+            title: 'Atur Paket & Pricelist',
+            desc: 'Sesuaikan harga awal, daftar fasilitas paket, atau ubah menjadi tanya harga langsung via WhatsApp.',
             to: '/admin/packages',
             icon: Package,
             action: 'Kelola Paket',

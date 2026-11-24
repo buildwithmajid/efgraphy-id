@@ -156,7 +156,7 @@ export default function AdminPortfolioPage() {
         <div>
           <h1 className="font-serif text-3xl font-medium text-ink sm:text-4xl">Kelola Portofolio</h1>
           <p className="mt-1 text-sm text-ink-2">
-            Unggah hasil karya terbaik Efgraphy.id. Foto yang ditandai bintang akan muncul di galeri 3D Beranda.
+            Unggah karya terbaru Efgraphy.id. Foto bertanda bintang akan tampil di galeri utama halaman depan.
           </p>
         </div>
         <button
@@ -311,7 +311,7 @@ export default function AdminPortfolioPage() {
                 />
                 <span className="text-sm text-ink">
                   <strong>Tampilkan di Beranda</strong>
-                  <span className="block text-xs text-ink-2">Masuk dalam galeri 3D melengkung di halaman depan.</span>
+                  <span className="block text-xs text-ink-2">Foto akan tampil di galeri pilihan halaman depan.</span>
                 </span>
               </label>
 

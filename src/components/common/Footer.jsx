@@ -86,11 +86,6 @@ export default function Footer({ settings, onReplayIntro }) {
                   Lokasi &amp; Area Layanan
                 </a>
               </li>
-              <li>
-                <Link to="/admin" className="text-ink-3 transition-colors hover:text-ink">
-                  Admin Panel
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -121,7 +116,7 @@ export default function Footer({ settings, onReplayIntro }) {
               className="inline-flex min-h-10 items-center gap-2 text-ink-2 underline-offset-4 transition-colors hover:text-ink hover:underline"
             >
               <RotateCcw className="size-3.5" strokeWidth={1.6} />
-              Putar ulang intro kamera 3D
+              Putar ulang intro kamera
             </button>
           )}
         </div>

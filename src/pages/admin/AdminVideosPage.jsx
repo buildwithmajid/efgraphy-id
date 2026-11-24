@@ -186,8 +186,8 @@ export default function AdminVideosPage() {
         <div>
           <h1 className="font-serif text-3xl font-medium text-ink sm:text-4xl">Video &amp; Reels</h1>
           <p className="mt-1 text-sm text-ink-2">
-            Tempel link dari TikTok, Instagram Reels, YouTube/Shorts, Google Drive, atau file MP4 — ringan dan hemat
-            storage.
+            Upload klip MP4 pendek (maks. 25 MB) supaya langsung diputar di website, atau tempel link YouTube,
+            Instagram Reels, dan TikTok.
           </p>
         </div>
         <button

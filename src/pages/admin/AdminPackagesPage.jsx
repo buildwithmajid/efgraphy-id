@@ -149,7 +149,7 @@ export default function AdminPackagesPage() {
         <div>
           <h1 className="font-serif text-3xl font-medium text-ink sm:text-4xl">Paket &amp; Pricelist</h1>
           <p className="mt-1 text-sm text-ink-2">
-            Atur mode harga hybrid: tampilkan nominal "Mulai dari Rp..." atau "Request Pricelist via WA".
+            Atur daftar paket yang tampil di website — bisa menampilkan harga awal atau langsung tanya pricelist via WA.
           </p>
         </div>
         <button

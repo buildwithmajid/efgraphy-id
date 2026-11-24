@@ -81,7 +81,7 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <h2 className="max-w-[15ch] font-serif text-[clamp(2.2rem,5vw,3.6rem)] font-medium leading-[1.04] tracking-[-0.015em] text-cream">
-            Karya pilihan di balik <em className="font-normal text-champagne">lensa</em> kami.
+            Cuplikan momen yang pernah kami <em className="font-normal text-champagne">abadikan</em>.
           </h2>
           <Link
             to="/portfolio"
@@ -178,7 +178,7 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
 
           <div className="flex items-center gap-4">
             <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-cream/55 tabular-nums">
-              DRAG · KLIK &nbsp;&nbsp; {String(active + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
+              GESER · KLIK &nbsp;&nbsp; {String(active + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
             </span>
             <div className="flex items-center gap-2">
               <button

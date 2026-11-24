@@ -38,7 +38,12 @@ export function AuthProvider({ children }) {
           throw new Error('Supabase belum dikonfigurasi. Gunakan tombol Mode Demo Lokal atau isi file .env.')
         }
         const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-        if (error) throw new Error(error.message)
+        if (error) {
+          if (error.message?.toLowerCase().includes('invalid login')) {
+            throw new Error('Email atau password salah. Silakan periksa kembali.')
+          }
+          throw new Error('Gagal masuk. Periksa koneksi internet lalu coba lagi.')
+        }
         return data.user
       },
       signInDemo() {
