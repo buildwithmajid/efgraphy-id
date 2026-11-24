@@ -66,7 +66,7 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={<HomePage key={revealed ? 'shown' : 'pending'} revealed={revealed} onReplayIntro={replayIntro} />}
+            element={<HomePage revealed={revealed} onReplayIntro={replayIntro} />}
           />
           <Route path="/portfolio" element={<PortfolioPage onReplayIntro={replayIntro} />} />
 
@@ -90,7 +90,7 @@ export default function App() {
 
           <Route
             path="*"
-            element={<HomePage key={revealed ? 'shown' : 'pending'} revealed={revealed} onReplayIntro={replayIntro} />}
+            element={<HomePage revealed={revealed} onReplayIntro={replayIntro} />}
           />
         </Routes>
       </Suspense>

@@ -8,14 +8,14 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms))
 const EASE = [0.16, 1, 0.3, 1]
 
 /**
- * Koreografi 3D Camera Intro (selalu berjalan penuh saat diklik user — tidak dilewati oleh setting OS):
- *   1. idle      → Kamera di posisi awal menyerong 3D; gerakkan kursor di atas kamera untuk putar 360°.
- *   2. align     → Begitu diklik, TIDAK langsung masuk — kamera berputar mulus lewat jarak terdekat
- *                  dari posisi menyerong/360° hingga LURUS SEJAJAR KE DEPAN (0, 0, 0), lalu berhenti
- *                  sejenak membidik kita sambil lampu AF berkedip & berbunyi bip fokus.
- *   3. strobe    → "CEKREK!" Sinar starburst flash memancar nyata keluar dari jendela flash kamera.
- *   4. whiteHold → Seluruh layar berubah menjadi PUTIH TERANG + efek glitch shutter & blur sebentar.
- *   5. reveal    → Cahaya flash & blur mereda halus membuka website utama.
+ * Koreografi 3D Camera Intro (murni GPU-composited opacity & transform agar 60fps tanpa patah-patah):
+ *   1. idle      → Kamera di posisi menyerong 3D; kursor di atas kamera bisa putar 360°.
+ *   2. align     → Begitu diklik, kamera berputar mulus lewat jarak terdekat hingga lurus ke depan (0, 0, 0),
+ *                  lalu berhenti sejenak membidik dengan lampu AF berkedip & bunyi bip fokus.
+ *   3. strobe    → "CEKREK!" Kilatan starburst flash memancar nyata dari jendela flash kamera.
+ *   4. whiteHold → Cahaya flash putih mengembang halus hingga layar putih penuh. Di balik layar putih ini,
+ *                  WebGL dilepas dengan tenang sebelum transisi pudar dimulai (zero frame drop!).
+ *   5. reveal    → Layar putih flash memudar sangat mulus membuka halaman utama yang sudah siap di belakang.
  */
 export default function IntroExperience({ onReveal, onFinish }) {
   const [phase, setPhaseState] = useState('idle') // idle → align → strobe → whiteHold → reveal
@@ -32,27 +32,29 @@ export default function IntroExperience({ onReveal, onFinish }) {
   const capture = useCallback(async () => {
     if (phaseRef.current.phase !== 'idle' || !ready) return
 
-    // Tahap 1 (1550ms): Kamera bergerak memutar lewat jarak terdekat hingga LURUS SEJAJAR (950ms),
-    // lalu diam membidik kita di posisi lurus (600ms) dengan bunyi bip autofokus.
+    // Tahap 1 (1480ms): Kamera bergerak memutar hingga lurus sejajar (950ms) + diam membidik (530ms)
     setPhase('align')
-    await wait(880)
+    await wait(860)
     playFocusBeep()
-    await wait(670)
+    await wait(620)
 
-    // Tahap 2 (420ms): "CEKREK!" — Kilatan flash starburst memancar nyata langsung dari kamera 3D
+    // Tahap 2 (340ms): "CEKREK!" Kilatan flash starburst memancar langsung dari jendela flash kamera 3D
     playShutterSound()
     setPhase('strobe')
-    await wait(420)
+    await wait(340)
 
-    // Tahap 3 (520ms): Layar menjadi PUTIH PENUH + efek glitch shutter & blur sebentar
+    // Tahap 3 (340ms): Layar putih flash menutup mulus ke opacity 100%
     setPhase('whiteHold')
-    await wait(520)
+    await wait(240)
 
-    // Tahap 4 (950ms): Di balik layar putih flash, buka website utama lalu pudarkan putih + blur
-    setPhase('reveal')
+    // Lepas WebGL & siapkan halaman utama SAAT layar 100% putih diam (tidak tabrakan dengan animasi fade!)
     setSceneGone(true)
     onReveal?.()
-    await wait(950)
+    await wait(160)
+
+    // Tahap 4 (920ms): Layar putih flash memudar super halus membuka halaman utama
+    setPhase('reveal')
+    await wait(940)
     onFinish?.()
   }, [ready, onReveal, onFinish])
 
@@ -92,6 +94,7 @@ export default function IntroExperience({ onReveal, onFinish }) {
   const isStrobe = phase === 'strobe'
   const isWhiteHold = phase === 'whiteHold'
   const isRevealing = phase === 'reveal'
+  const showFlashVeil = isStrobe || isWhiteHold || (isRevealing && !leaving)
 
   return (
     <MotionConfig reducedMotion="never">
@@ -105,18 +108,9 @@ export default function IntroExperience({ onReveal, onFinish }) {
       >
         {!sceneGone && (
           <motion.div
-            className="absolute inset-0 bg-obsidian"
-            animate={
-              isWhiteHold
-                ? { scale: 1.05, filter: 'blur(26px) brightness(3.2)' }
-                : isStrobe
-                  ? { scale: 1.015, filter: 'blur(1px) brightness(1.35)' }
-                  : { scale: 1, filter: 'blur(0px) brightness(1)' }
-            }
-            transition={{
-              duration: isWhiteHold ? 0.34 : isStrobe ? 0.25 : 0.6,
-              ease: EASE,
-            }}
+            className="absolute inset-0 bg-obsidian will-change-transform"
+            animate={{ scale: isWhiteHold ? 1.035 : isStrobe ? 1.012 : 1 }}
+            transition={{ duration: isWhiteHold ? 0.32 : 0.45, ease: EASE }}
           >
             {/* cahaya studio hangat di belakang kamera */}
             <div
@@ -155,27 +149,28 @@ export default function IntroExperience({ onReveal, onFinish }) {
         )}
       </motion.div>
 
-      {/* Layar PUTIH PENUH + efek glitch shutter & blur khas flash sebelum masuk ke website utama */}
+      {/* Flash kamera murni GPU-composited (hanya opacity & scale, 60fps mulus tanpa patah-patah) */}
       <AnimatePresence>
-        {(isWhiteHold || (isRevealing && !leaving)) && (
+        {showFlashVeil && (
           <motion.div
             key="camera-flash-veil"
             aria-hidden="true"
-            className={`pointer-events-none fixed inset-0 z-[90] bg-white ${isWhiteHold ? 'efg-glitch-veil' : ''}`}
-            initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-            animate={
-              isWhiteHold
-                ? { opacity: 1, backdropFilter: 'blur(28px)' }
-                : { opacity: 0, backdropFilter: 'blur(0px)' }
-            }
+            className="pointer-events-none fixed inset-0 z-[90] will-change-[opacity]"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: isWhiteHold ? 1 : isStrobe ? 0.28 : 0,
+            }}
             exit={{ opacity: 0 }}
             transition={{
-              duration: isWhiteHold ? 0.14 : 0.95,
+              duration: isWhiteHold ? 0.22 : isStrobe ? 0.3 : 0.9,
               ease: isRevealing ? EASE : [0.22, 1, 0.36, 1],
             }}
-          >
-            {isWhiteHold && <div className="efg-glitch-bars absolute inset-0 opacity-70 mix-blend-multiply" />}
-          </motion.div>
+            style={{
+              background: isRevealing
+                ? 'radial-gradient(circle at 50% 38%, #ffffff 0%, #fffdf9 45%, #faf8f5 100%)'
+                : '#ffffff',
+            }}
+          />
         )}
       </AnimatePresence>
     </MotionConfig>
