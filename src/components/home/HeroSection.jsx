@@ -43,46 +43,38 @@ export default function HeroSection({ settings, portfolios, revealed }) {
       ref={sectionRef}
       onPointerMove={handleMove}
       onPointerLeave={() => setMouse({ x: 0, y: 0 })}
-      className="relative overflow-hidden bg-cream pt-28 pb-20 sm:pt-36 sm:pb-28 lg:pt-40 lg:pb-32"
+      className="relative overflow-hidden bg-cream pt-24 pb-14 sm:pt-28 sm:pb-16 lg:flex lg:min-h-[min(100dvh,800px)] lg:items-center lg:pt-20 lg:pb-10"
     >
-      {/* Viewfinder corner hairline marks halus di tepi hero */}
-      <div aria-hidden="true" className="pointer-events-none mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="relative">
-          <span className="absolute -left-2 -top-4 hidden h-5 w-5 border-l border-t border-sand lg:block" />
-          <span className="absolute -right-2 -top-4 hidden h-5 w-5 border-r border-t border-sand lg:block" />
-        </div>
-      </div>
-
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-12 lg:gap-8">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-12 lg:gap-8">
         {/* Kolom Teks Editorial */}
         <div className="relative z-20 lg:col-span-6">
           <motion.h1
             {...rise(0.05)}
-            className="max-w-[13ch] font-serif text-[clamp(3rem,7.2vw,5.4rem)] font-medium leading-[0.94] tracking-[-0.025em] text-ink"
+            className="max-w-[13ch] font-serif text-[clamp(2.75rem,5.4vw,4.65rem)] font-medium leading-[0.95] tracking-[-0.025em] text-ink"
           >
             Setiap momen, <em className="font-normal text-ink-2">diabadikan</em> seindah rasanya.
           </motion.h1>
 
           <motion.p
             {...rise(0.18)}
-            className="mt-7 max-w-[48ch] text-[16px] leading-[1.7] text-ink-2 sm:text-[17px]"
+            className="mt-5 max-w-[48ch] text-[15.5px] leading-[1.68] text-ink-2 sm:text-[16.5px]"
           >
             {settings?.hero_subtitle}
           </motion.p>
 
-          <motion.div {...rise(0.28)} className="mt-9 flex flex-wrap items-center gap-3">
+          <motion.div {...rise(0.28)} className="mt-7 flex flex-wrap items-center gap-3">
             <a
               href={buildWaLink(WA_MESSAGES.consult, settings?.whatsapp_number)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-12 items-center gap-2.5 rounded-full bg-wa px-6 text-sm font-medium text-white shadow-[0_12px_28px_-12px_rgba(24,87,53,0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-wa-hover"
+              className="inline-flex min-h-11 items-center gap-2.5 rounded-full bg-wa px-6 text-sm font-medium text-white shadow-[0_12px_28px_-12px_rgba(24,87,53,0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-wa-hover"
             >
               <WhatsAppIcon className="size-[18px]" />
               Konsultasi gratis via WhatsApp
             </a>
             <Link
               to="/portfolio"
-              className="inline-flex min-h-12 items-center gap-2 rounded-full border border-ink/20 bg-paper/70 px-6 text-sm font-medium text-ink transition-colors duration-300 hover:border-ink hover:bg-paper"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/20 bg-paper/70 px-6 text-sm font-medium text-ink transition-colors duration-300 hover:border-ink hover:bg-paper"
             >
               Jelajahi Portofolio
               <ArrowUpRight className="size-4" strokeWidth={1.6} />
@@ -92,7 +84,7 @@ export default function HeroSection({ settings, portfolios, revealed }) {
           {/* Trust & Coverage Bar */}
           <motion.div
             {...rise(0.38)}
-            className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-sand pt-6 text-[13px] text-ink-2"
+            className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-sand pt-5 text-[13px] text-ink-2"
           >
             <span>
               Berdiri sejak <strong className="font-semibold text-ink">{settings?.founded_year || '2019'}</strong>
@@ -107,14 +99,14 @@ export default function HeroSection({ settings, portfolios, revealed }) {
         {/* Kolom Panggung Foto 3D Z-Depth Weaving */}
         <motion.div
           {...rise(0.22)}
-          className="relative mx-auto flex h-[430px] w-full max-w-[540px] items-center justify-center sm:h-[520px] lg:col-span-6 lg:h-[570px]"
+          className="relative mx-auto flex h-[400px] w-full max-w-[500px] items-center justify-center sm:h-[460px] lg:col-span-6 lg:h-[470px] xl:h-[510px]"
           style={{ perspective: '1400px' }}
         >
           {/* Circular Lens Reticle SVG di belakang komposisi foto */}
           <svg
             aria-hidden="true"
             viewBox="0 0 420 420"
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[370px] w-[370px] -translate-x-1/2 -translate-y-1/2 text-ink/15 sm:h-[450px] sm:w-[450px]"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 text-ink/15 sm:h-[400px] sm:w-[400px] xl:h-[430px] xl:w-[430px]"
           >
             <circle cx="210" cy="210" r="196" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4 6" />
             <circle cx="210" cy="210" r="168" fill="none" stroke="currentColor" strokeWidth="0.75" />
@@ -131,7 +123,7 @@ export default function HeroSection({ settings, portfolios, revealed }) {
               transform: `perspective(1200px) translate3d(${(mouse.x * -18).toFixed(1)}px, ${(mouse.y * -14).toFixed(1)}px, -90px) rotateY(${(-14 + mouse.x * 10).toFixed(1)}deg) rotateZ(-4deg)`,
               transition: 'transform 280ms cubic-bezier(0.22, 1, 0.36, 1)',
             }}
-            className="absolute left-1 top-6 z-0 w-[44%] overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_24px_50px_-24px_rgba(24,23,22,0.28)] sm:left-2 sm:top-8"
+            className="absolute left-1 top-4 z-0 w-[42%] overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_24px_50px_-24px_rgba(24,23,22,0.28)] sm:left-2 sm:top-5"
           >
             <img
               src={heroDetail}
@@ -147,7 +139,7 @@ export default function HeroSection({ settings, portfolios, revealed }) {
               transform: `perspective(1200px) translate3d(${(mouse.x * 16).toFixed(1)}px, ${(mouse.y * 12).toFixed(1)}px, 20px) rotateY(${(mouse.x * 12).toFixed(1)}deg) rotateX(${(-mouse.y * 8).toFixed(1)}deg)`,
               transition: 'transform 220ms cubic-bezier(0.22, 1, 0.36, 1)',
             }}
-            className="relative z-10 w-[58%] overflow-hidden rounded-sm border border-paper bg-paper p-2 shadow-[0_36px_80px_-28px_rgba(24,23,22,0.35)] sm:w-[56%]"
+            className="relative z-10 w-[54%] overflow-hidden rounded-sm border border-paper bg-paper p-2 shadow-[0_36px_80px_-28px_rgba(24,23,22,0.35)] sm:w-[52%]"
           >
             <div className="flex items-center justify-between px-1 pb-1.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-3 sm:text-[10px]">
               <span>EFGRAPHY · 35MM</span>
@@ -167,7 +159,7 @@ export default function HeroSection({ settings, portfolios, revealed }) {
               transform: `perspective(1200px) translate3d(${(mouse.x * 32).toFixed(1)}px, ${(mouse.y * 24).toFixed(1)}px, 80px) rotateY(${(12 + mouse.x * 14).toFixed(1)}deg) rotateZ(3deg)`,
               transition: 'transform 180ms cubic-bezier(0.22, 1, 0.36, 1)',
             }}
-            className="absolute bottom-2 right-1 z-20 w-[38%] overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_28px_60px_-22px_rgba(24,23,22,0.32)] sm:bottom-6 sm:right-2 sm:w-[42%]"
+            className="absolute bottom-2 right-1 z-20 w-[37%] overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_28px_60px_-22px_rgba(24,23,22,0.32)] sm:bottom-3 sm:right-2 sm:w-[39%]"
           >
             <img
               src={heroSecondary}
