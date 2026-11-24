@@ -16,20 +16,20 @@ Panduan bertahap pembangunan website **Efgraphy.id** dengan pengalaman **3D Came
 - [x] Bangun **Animasi Transisi "Cekrek"** (3D zoom-in ke lensa → *shutter iris blade* + *white flash* + suara klik shutter halus → reveal ke halaman utama + manajemen `sessionStorage`).
 
 ## Fase 3 — Website Publik 3D Editorial & Direct WhatsApp
-- [ ] Bangun layout global: **Floating Glass Editorial Navbar** (responsif + logo), **Footer** (termasuk tombol *Replay 3D Intro*), dan **Floating WhatsApp Button**.
-- [ ] Bangun **Hero Editorial Z-Depth Weaving** (tipografi *Memory of Lens* + kartu foto berperspektif melayang di depan/belakang teks + lens reticle SVG).
-- [ ] Bangun **Trust & Coverage Strip** (Sejak 2019 · Free Konsultasi · Kendal–Semarang–Batang–Pekalongan).
-- [ ] Bangun **4 Layanan Utama dengan 3D Tilt Cards** (Wedding, Prewedding, Engagement, Birthday/Wisuda) + Direct WhatsApp CTA.
-- [ ] Bangun **3D Curved Arc Portfolio Showcase** di Beranda (drag/klik 3D carousel + depth-of-field + status bar `DRAG · CLICK  01 / 08`).
-- [ ] Bangun **Halaman Galeri Portofolio (`/portfolio`)** dengan filter kategori, **3D Magnetic Tilt Cards**, dan **Lightbox Modal** layar penuh.
-- [ ] Bangun **Section Pricelist Hybrid** (`Mulai dari Rp...` & `Request Pricelist via WA`), **Testimoni**, dan **Lokasi Google Maps**.
+- [x] Bangun layout global: **Floating Glass Editorial Navbar** (responsif + logo), **Footer** (termasuk tombol *Replay 3D Intro*), dan **Floating WhatsApp Button**.
+- [x] Bangun **Hero Editorial Z-Depth Weaving** (tipografi *Memory of Lens* + kartu foto berperspektif melayang di depan/belakang teks + lens reticle SVG).
+- [x] Bangun **Trust & Coverage Strip** (Sejak 2019 · Free Konsultasi · Kendal–Semarang–Batang–Pekalongan).
+- [x] Bangun **4 Layanan Utama dengan 3D Tilt Cards** (Wedding, Prewedding, Engagement, Birthday/Wisuda) + Direct WhatsApp CTA.
+- [x] Bangun **3D Curved Arc Portfolio Showcase** di Beranda (drag/klik 3D carousel + depth-of-field + status bar `DRAG · KLIK  01 / 08`).
+- [x] Bangun **Halaman Galeri Portofolio (`/portfolio`)** dengan filter kategori, **3D Magnetic Tilt Cards**, dan **Lightbox Modal** layar penuh.
+- [x] Bangun **Section Pricelist Hybrid** (`Mulai dari Rp...` & `Request Pricelist via WA`), **Testimoni**, dan **Lokasi Google Maps**.
 
 ## Fase 4 — Admin Panel / CMS (`/admin`)
-- [ ] Bangun **AuthContext**, **ProtectedRoute**, dan halaman **Login Admin (`/admin/login`)**.
-- [ ] Bangun **Admin Dashboard** & navigasi sidebar.
-- [ ] Bangun **CRUD Portofolio** dengan fitur upload gambar ke Supabase Storage + preview instan.
-- [ ] Bangun **CRUD Paket & Pricelist** (toggle `Mulai dari Rp...` vs `Request Pricelist`, daftar fitur, & template pesan WA).
-- [ ] Bangun **CRUD Testimoni** dan **Pengaturan Website** (nomor WA, teks Hero, link sosmed).
+- [x] Bangun **AuthContext**, **ProtectedRoute**, dan halaman **Login Admin (`/admin/login`)**.
+- [x] Bangun **Admin Dashboard** & navigasi sidebar (responsif desktop + mobile, termasuk Mode Demo Lokal sebelum `.env` Supabase diisi).
+- [x] Bangun **CRUD Portofolio** dengan fitur kompresi otomatis WebP + upload gambar ke Supabase Storage + preview instan.
+- [x] Bangun **CRUD Paket & Pricelist** (toggle `Mulai dari Rp...` vs `Request Pricelist`, daftar fitur, & template pesan WA).
+- [x] Bangun **CRUD Testimoni** dan **Pengaturan Website** (nomor WA, teks Hero, link sosmed).
 
 ## Fase 5 — Integrasi Aset Asli, Optimasi 3D & Peluncuran
 - [ ] Setup project Supabase, jalankan `supabase/schema.sql`, buat akun admin owner, dan isi `.env`.
