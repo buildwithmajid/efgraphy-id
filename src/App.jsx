@@ -10,6 +10,7 @@ const AdminLayout = lazy(() => import('./components/admin/AdminLayout'))
 const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'))
 const AdminDashboardPage = lazy(() => import('./pages/admin/AdminDashboardPage'))
 const AdminPortfolioPage = lazy(() => import('./pages/admin/AdminPortfolioPage'))
+const AdminVideosPage = lazy(() => import('./pages/admin/AdminVideosPage'))
 const AdminPackagesPage = lazy(() => import('./pages/admin/AdminPackagesPage'))
 const AdminTestimonialsPage = lazy(() => import('./pages/admin/AdminTestimonialsPage'))
 const AdminSettingsPage = lazy(() => import('./pages/admin/AdminSettingsPage'))
@@ -81,6 +82,7 @@ export default function App() {
           >
             <Route index element={<AdminDashboardPage />} />
             <Route path="portfolio" element={<AdminPortfolioPage />} />
+            <Route path="videos" element={<AdminVideosPage />} />
             <Route path="packages" element={<AdminPackagesPage />} />
             <Route path="testimonials" element={<AdminTestimonialsPage />} />
             <Route path="settings" element={<AdminSettingsPage />} />

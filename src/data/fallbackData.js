@@ -19,22 +19,22 @@ export const fallbackSettings = {
 }
 
 export const fallbackCategories = [
-  { id: 'cat-wedding', name: 'Wedding', slug: 'wedding', sort_order: 1, description: 'Akad, resepsi, dan momen persiapan sebelum ijab.' },
-  { id: 'cat-prewedding', name: 'Prewedding', slug: 'prewedding', sort_order: 2, description: 'Sesi indoor studio maupun outdoor dengan cahaya sore.' },
+  { id: 'cat-wedding', name: 'Wedding', slug: 'wedding', sort_order: 1, description: 'Akad, resepsi, ngunduh mantu, dan momen persiapan sebelum ijab.' },
+  { id: 'cat-prewedding', name: 'Prewedding', slug: 'prewedding', sort_order: 2, description: 'Sesi outdoor Kota Lama, Umbul Sidomukti, hingga Photo Studio.' },
   { id: 'cat-engagement', name: 'Engagement', slug: 'engagement', sort_order: 3, description: 'Lamaran & tunangan, hangat bersama dua keluarga.' },
-  { id: 'cat-birthday', name: 'Birthday & Wisuda', slug: 'birthday-wisuda', sort_order: 4, description: 'Picnic birthday, ulang tahun anak, dan hari kelulusan.' },
-  { id: 'cat-event', name: 'Event & Lainnya', slug: 'event', sort_order: 5, description: 'Tedhak siten, anniversary, acara kampus & komunitas.' },
+  { id: 'cat-birthday', name: 'Birthday & Wisuda', slug: 'birthday-wisuda', sort_order: 4, description: 'Birthday party (termasuk EO), picnic birthday, dan wisuda.' },
+  { id: 'cat-event', name: 'Tedhak Siten & Event', slug: 'event', sort_order: 5, description: 'Tedhak siten, photo studio, anniversary, serta event kampus & komunitas.' },
 ]
 
 export const fallbackPortfolios = [
-  { id: 'pf-1', category_id: 'cat-wedding', title: 'Akad di Rumah Joglo', location: 'Kendal', image_url: '/placeholders/wedding-1.jpg', is_featured: true, sort_order: 1 },
-  { id: 'pf-2', category_id: 'cat-wedding', title: 'Prepare Before Ijab', location: 'Pegandon, Kendal', image_url: '/placeholders/wedding-2.jpg', is_featured: true, sort_order: 2 },
-  { id: 'pf-3', category_id: 'cat-prewedding', title: 'Golden Hour di Pantai', location: 'Kendal', image_url: '/placeholders/prewedding-1.jpg', is_featured: true, sort_order: 3 },
-  { id: 'pf-4', category_id: 'cat-prewedding', title: 'Studio Monokrom', location: 'Semarang', image_url: '/placeholders/prewedding-2.jpg', is_featured: true, sort_order: 4 },
-  { id: 'pf-5', category_id: 'cat-engagement', title: 'Lamaran Keluarga', location: 'Batang', image_url: '/placeholders/engagement-1.jpg', is_featured: true, sort_order: 5 },
-  { id: 'pf-6', category_id: 'cat-birthday', title: 'Sunset Picnic Birthday', location: 'Kendal', image_url: '/placeholders/birthday-1.jpg', is_featured: true, sort_order: 6 },
-  { id: 'pf-7', category_id: 'cat-birthday', title: 'Hari Wisuda', location: 'Semarang', image_url: '/placeholders/wisuda-1.jpg', is_featured: true, sort_order: 7 },
-  { id: 'pf-8', category_id: 'cat-event', title: 'Tedhak Siten', location: 'Kendal', image_url: '/placeholders/event-1.jpg', is_featured: true, sort_order: 8 },
+  { id: 'pf-1', category_id: 'cat-wedding', title: 'Ngunduh Mantu Susanto & Uswatun', location: 'Kendal', image_url: '/portfolio/wedding-1.jpg', is_featured: true, sort_order: 1 },
+  { id: 'pf-2', category_id: 'cat-wedding', title: 'Bridal Preparation — Nia & Fatkhurrohim', location: 'Kendal', image_url: '/portfolio/wedding-2.jpg', is_featured: true, sort_order: 2 },
+  { id: 'pf-3', category_id: 'cat-prewedding', title: 'Prewedding Meirta & Aji', location: 'Kota Lama, Semarang', image_url: '/portfolio/prewedding-1.jpg', is_featured: true, sort_order: 3 },
+  { id: 'pf-4', category_id: 'cat-prewedding', title: 'Outdoor Pine Forest Prewedding', location: 'Semarang · Kendal', image_url: '/portfolio/prewedding-2.jpg', is_featured: true, sort_order: 4 },
+  { id: 'pf-5', category_id: 'cat-engagement', title: 'Engagement Day Anas & Zafira', location: 'Gringsing, Batang', image_url: '/portfolio/engagement-1.jpg', is_featured: true, sort_order: 5 },
+  { id: 'pf-6', category_id: 'cat-birthday', title: 'Picnic Birthday Outdoor', location: 'Weleri, Kendal', image_url: '/portfolio/birthday-1.jpg', is_featured: true, sort_order: 6 },
+  { id: 'pf-7', category_id: 'cat-birthday', title: 'Portrait Finalis Duta GenRe', location: 'Kendal', image_url: '/portfolio/studio-1.jpg', is_featured: true, sort_order: 7 },
+  { id: 'pf-8', category_id: 'cat-event', title: 'Tedhak Siten Dek Ghea', location: 'Kendal', image_url: '/portfolio/tedhaksiten-1.jpg', is_featured: true, sort_order: 8 },
 ]
 
 export const fallbackPackages = [
@@ -93,6 +93,86 @@ export const fallbackPackages = [
 ]
 
 export const fallbackTestimonials = [
-  { id: 'ts-1', client_name: 'Indah', event_type: 'Wedding', quote: 'Wedding dream pollll ♥️', is_active: true },
-  { id: 'ts-2', client_name: 'Rania', event_type: 'Birthday', quote: 'Kids friendly pokoknya fotografernya, anak-anak nyaman difoto.', is_active: true },
+  {
+    id: 'ts-1',
+    client_name: 'Indah (@indaharsm)',
+    event_type: 'Wedding · Foto & Video',
+    quote: 'New journey, forever adventure. Terima kasih buat tangan-tangan ajaibnya — Foto & Video by @efgraphy.id.',
+    is_active: true,
+  },
+  {
+    id: 'ts-2',
+    client_name: 'Rania',
+    event_type: 'Birthday Party',
+    quote: 'Kids friendly pokoknya fotografernya, anak-anak nyaman banget difoto.',
+    is_active: true,
+  },
+]
+
+export const fallbackVideos = [
+  {
+    id: 'vid-1',
+    category_id: 'cat-wedding',
+    title: 'On Wedding — Difa & Wahyu',
+    video_url: 'https://www.instagram.com/efgraphy.id/reel/DYePzaXyy5P/',
+    thumbnail_url: '/portfolio/wedding-1.jpg',
+    aspect_ratio: 'vertical',
+    duration: 'Reels',
+    location: 'Kendal',
+    is_featured: true,
+    is_active: true,
+    sort_order: 1,
+  },
+  {
+    id: 'vid-2',
+    category_id: 'cat-wedding',
+    title: 'Bridal Preparation — In Preparation',
+    video_url: 'https://www.instagram.com/efgraphy.id/reel/DKeLVhCvT_p/',
+    thumbnail_url: '/portfolio/wedding-2.jpg',
+    aspect_ratio: 'vertical',
+    duration: 'Reels',
+    location: 'Kendal',
+    is_featured: true,
+    is_active: true,
+    sort_order: 2,
+  },
+  {
+    id: 'vid-3',
+    category_id: 'cat-event',
+    title: 'Tedhak Siten Cinematic — Kayla Celine',
+    video_url: 'https://www.instagram.com/efgraphy.id/reel/DDDvnVYTy9F/',
+    thumbnail_url: '/portfolio/tedhaksiten-1.jpg',
+    aspect_ratio: 'vertical',
+    duration: 'Reels',
+    location: 'Kendal',
+    is_featured: true,
+    is_active: true,
+    sort_order: 3,
+  },
+  {
+    id: 'vid-4',
+    category_id: 'cat-wedding',
+    title: 'Wedding Highlight — Semarang Coverage',
+    video_url: 'https://www.tiktok.com/@efgraphy.id/video/7651975546708004117',
+    thumbnail_url: '/portfolio/prewedding-1.jpg',
+    aspect_ratio: 'vertical',
+    duration: 'TikTok',
+    location: 'Semarang',
+    is_featured: false,
+    is_active: true,
+    sort_order: 4,
+  },
+  {
+    id: 'vid-5',
+    category_id: 'cat-wedding',
+    title: 'Photo After "Sah" — Wedding Akad',
+    video_url: 'https://www.instagram.com/efgraphy.id/reel/DVLFKPgk4Ha/',
+    thumbnail_url: '/portfolio/engagement-1.jpg',
+    aspect_ratio: 'vertical',
+    duration: 'Reels',
+    location: 'Kendal',
+    is_featured: false,
+    is_active: true,
+    sort_order: 5,
+  },
 ]

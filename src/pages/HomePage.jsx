@@ -5,16 +5,19 @@ import FloatingWhatsApp from '../components/common/FloatingWhatsApp'
 import HeroSection from '../components/home/HeroSection'
 import ServicesSection from '../components/home/ServicesSection'
 import Portfolio3DShowcase from '../components/home/Portfolio3DShowcase'
+import MotionReelsSection from '../components/home/MotionReelsSection'
 import PricingSection from '../components/home/PricingSection'
 import TestimonialsSection from '../components/home/TestimonialsSection'
 import LocationSection from '../components/home/LocationSection'
 import LightboxModal from '../components/portfolio/LightboxModal'
+import VideoModal from '../components/portfolio/VideoModal'
 import {
   getCategories,
   getPackages,
   getPortfolios,
   getSettings,
   getTestimonials,
+  getVideos,
 } from '../services/cmsService'
 import {
   fallbackCategories,
@@ -22,27 +25,32 @@ import {
   fallbackPortfolios,
   fallbackSettings,
   fallbackTestimonials,
+  fallbackVideos,
 } from '../data/fallbackData'
 
 export default function HomePage({ revealed, onReplayIntro }) {
   const [settings, setSettings] = useState(fallbackSettings)
   const [categories, setCategories] = useState(fallbackCategories)
   const [portfolios, setPortfolios] = useState(fallbackPortfolios)
+  const [videos, setVideos] = useState(fallbackVideos)
   const [packages, setPackages] = useState(fallbackPackages)
   const [testimonials, setTestimonials] = useState(fallbackTestimonials)
   const [lightboxIndex, setLightboxIndex] = useState(null)
+  const [activeVideo, setActiveVideo] = useState(null)
 
   useEffect(() => {
     Promise.all([
       getSettings(),
       getCategories(),
       getPortfolios({ featuredOnly: true }),
+      getVideos({ featuredOnly: true }),
       getPackages(),
       getTestimonials(),
-    ]).then(([s, c, p, pk, ts]) => {
+    ]).then(([s, c, p, v, pk, ts]) => {
       setSettings(s)
       setCategories(c)
       setPortfolios(p)
+      setVideos(v)
       setPackages(pk)
       setTestimonials(ts)
     })
@@ -70,6 +78,11 @@ export default function HomePage({ revealed, onReplayIntro }) {
           categoryMap={categoryMap}
           onOpenLightbox={setLightboxIndex}
         />
+        <MotionReelsSection
+          videos={videos}
+          categoryMap={categoryMap}
+          onSelectVideo={setActiveVideo}
+        />
         <PricingSection packages={packages} settings={settings} />
         <TestimonialsSection testimonials={testimonials} settings={settings} />
         <LocationSection settings={settings} />
@@ -83,6 +96,13 @@ export default function HomePage({ revealed, onReplayIntro }) {
         index={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
         onChange={setLightboxIndex}
+        categoryMap={categoryMap}
+        whatsappNumber={settings?.whatsapp_number}
+      />
+
+      <VideoModal
+        video={activeVideo}
+        onClose={() => setActiveVideo(null)}
         categoryMap={categoryMap}
         whatsappNumber={settings?.whatsapp_number}
       />

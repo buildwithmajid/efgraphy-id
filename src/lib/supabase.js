@@ -11,3 +11,4 @@ export const supabase = isSupabaseConfigured
   : null
 
 export const PORTFOLIO_BUCKET = 'portfolio-images'
+export const VIDEO_BUCKET = 'portfolio-videos'

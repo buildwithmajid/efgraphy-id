@@ -50,6 +50,22 @@ create table if not exists public.testimonials (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.videos (
+  id uuid primary key default gen_random_uuid(),
+  category_id uuid references public.categories(id) on delete set null,
+  title text not null,
+  video_url text not null,
+  thumbnail_url text not null,
+  aspect_ratio text not null default 'vertical'
+    check (aspect_ratio in ('vertical', 'landscape')),
+  duration text,
+  location text,
+  is_featured boolean not null default true,
+  is_active boolean not null default true,
+  sort_order int not null default 0,
+  created_at timestamptz not null default now()
+);
+
 create table if not exists public.site_settings (
   key text primary key,
   value text,
@@ -61,6 +77,7 @@ alter table public.categories   enable row level security;
 alter table public.portfolios   enable row level security;
 alter table public.packages     enable row level security;
 alter table public.testimonials enable row level security;
+alter table public.videos       enable row level security;
 alter table public.site_settings enable row level security;
 
 -- Publik: hanya baca
@@ -68,6 +85,7 @@ create policy "public read categories"   on public.categories   for select using
 create policy "public read portfolios"   on public.portfolios   for select using (true);
 create policy "public read packages"     on public.packages     for select using (is_active or auth.role() = 'authenticated');
 create policy "public read testimonials" on public.testimonials for select using (is_active or auth.role() = 'authenticated');
+create policy "public read videos"       on public.videos       for select using (is_active or auth.role() = 'authenticated');
 create policy "public read settings"     on public.site_settings for select using (true);
 
 -- Admin (login): kelola semua
@@ -75,21 +93,24 @@ create policy "admin write categories"   on public.categories   for all to authe
 create policy "admin write portfolios"   on public.portfolios   for all to authenticated using (true) with check (true);
 create policy "admin write packages"     on public.packages     for all to authenticated using (true) with check (true);
 create policy "admin write testimonials" on public.testimonials for all to authenticated using (true) with check (true);
+create policy "admin write videos"       on public.videos       for all to authenticated using (true) with check (true);
 create policy "admin write settings"     on public.site_settings for all to authenticated using (true) with check (true);
 
--- ---------- Storage bucket foto ----------
+-- ---------- Storage bucket foto & video ----------
 insert into storage.buckets (id, name, public)
-values ('portfolio-images', 'portfolio-images', true)
+values
+  ('portfolio-images', 'portfolio-images', true),
+  ('portfolio-videos', 'portfolio-videos', true)
 on conflict (id) do nothing;
 
 create policy "public read portfolio images" on storage.objects
-  for select using (bucket_id = 'portfolio-images');
+  for select using (bucket_id in ('portfolio-images', 'portfolio-videos'));
 create policy "admin upload portfolio images" on storage.objects
-  for insert to authenticated with check (bucket_id = 'portfolio-images');
+  for insert to authenticated with check (bucket_id in ('portfolio-images', 'portfolio-videos'));
 create policy "admin update portfolio images" on storage.objects
-  for update to authenticated using (bucket_id = 'portfolio-images');
+  for update to authenticated using (bucket_id in ('portfolio-images', 'portfolio-videos'));
 create policy "admin delete portfolio images" on storage.objects
-  for delete to authenticated using (bucket_id = 'portfolio-images');
+  for delete to authenticated using (bucket_id in ('portfolio-images', 'portfolio-videos'));
 
 -- ---------- Data awal ----------
 insert into public.categories (name, slug, description, sort_order) values

@@ -20,9 +20,9 @@ export default function HeroSection({ settings, portfolios, revealed }) {
   const midY = useTransform(scrollYProgress, [0, 1], [0, -96])
   const backY = useTransform(scrollYProgress, [0, 1], [0, -28])
 
-  const heroPrimary = portfolios?.[0]?.image_url || '/placeholders/wedding-1.jpg'
-  const heroSecondary = portfolios?.[2]?.image_url || '/placeholders/prewedding-1.jpg'
-  const heroDetail = portfolios?.[1]?.image_url || '/placeholders/wedding-2.jpg'
+  const heroPrimary = portfolios?.[0]?.image_url || '/portfolio/wedding-1.jpg'
+  const heroSecondary = portfolios?.[2]?.image_url || '/portfolio/prewedding-1.jpg'
+  const heroDetail = portfolios?.[1]?.image_url || '/portfolio/wedding-2.jpg'
 
   const handleMove = (e) => {
     if (e.pointerType === 'touch') return

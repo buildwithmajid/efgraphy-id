@@ -4,7 +4,7 @@
  * - Jika Supabase belum dikonfigurasi: berjalan dalam Mode Demo Lokal berbasis localStorage
  *   agar developer & owner bisa mencoba seluruh alur Admin CMS tanpa setup cloud terlebih dahulu.
  */
-import { supabase, isSupabaseConfigured, PORTFOLIO_BUCKET } from '../lib/supabase'
+import { supabase, isSupabaseConfigured, PORTFOLIO_BUCKET, VIDEO_BUCKET } from '../lib/supabase'
 import { compressImage, fileToDataUrl } from '../lib/imageCompress'
 import {
   fallbackCategories,
@@ -12,12 +12,14 @@ import {
   fallbackPortfolios,
   fallbackSettings,
   fallbackTestimonials,
+  fallbackVideos,
 } from '../data/fallbackData'
 
 const DEMO_KEYS = {
   portfolios: 'efg_demo_portfolios',
   packages: 'efg_demo_packages',
   testimonials: 'efg_demo_testimonials',
+  videos: 'efg_demo_videos',
   settings: 'efg_demo_settings',
 }
 
@@ -91,6 +93,17 @@ export async function getTestimonials() {
     fallbackTestimonials,
   )
   return data.length ? data : fallbackTestimonials
+}
+
+export async function getVideos({ featuredOnly = false } = {}) {
+  if (!isSupabaseConfigured) {
+    const list = readDemo(DEMO_KEYS.videos, fallbackVideos).filter((v) => v.is_active !== false)
+    return featuredOnly ? list.filter((v) => v.is_featured) : list
+  }
+  let q = supabase.from('videos').select('*').eq('is_active', true).order('sort_order').order('created_at', { ascending: false })
+  if (featuredOnly) q = q.eq('is_featured', true)
+  const data = await safeSelect(q, fallbackVideos)
+  return data.length ? data : fallbackVideos
 }
 
 export async function getSettings() {
@@ -268,6 +281,78 @@ export async function deleteTestimonial(id) {
     return
   }
   const { error } = await supabase.from('testimonials').delete().eq('id', id)
+  if (error) throw new Error(error.message)
+}
+
+// ============================================================
+// ADMIN READS & CRUD — VIDEOS & REELS
+// ============================================================
+
+export async function getAdminVideos() {
+  if (!isSupabaseConfigured) {
+    return readDemo(DEMO_KEYS.videos, fallbackVideos)
+  }
+  const { data, error } = await supabase.from('videos').select('*').order('sort_order').order('created_at', { ascending: false })
+  if (error) throw new Error(error.message)
+  return data || []
+}
+
+export async function uploadPortfolioVideo(file) {
+  if (!file || !file.type.startsWith('video/')) {
+    throw new Error('File harus berupa video (MP4 atau WebM).')
+  }
+  const maxBytes = 25 * 1024 * 1024 // 25 MB
+  if (file.size > maxBytes) {
+    throw new Error('Ukuran video maksimal 25 MB agar ringan diputar. Untuk video panjang, gunakan link YouTube.')
+  }
+
+  if (!isSupabaseConfigured) {
+    return URL.createObjectURL(file)
+  }
+
+  const safeName = file.name.replace(/[^a-zA-Z0-9-_.]/g, '-')
+  const filePath = `${Date.now()}-${safeName}`
+  const { error: uploadError } = await supabase.storage
+    .from(VIDEO_BUCKET)
+    .upload(filePath, file, { contentType: file.type, upsert: false })
+
+  if (uploadError) throw new Error(`Gagal upload video: ${uploadError.message}`)
+
+  const { data } = supabase.storage.from(VIDEO_BUCKET).getPublicUrl(filePath)
+  return data.publicUrl
+}
+
+export async function createVideo(payload) {
+  if (!isSupabaseConfigured) {
+    const list = readDemo(DEMO_KEYS.videos, fallbackVideos)
+    const item = { id: makeId('vid'), created_at: new Date().toISOString(), sort_order: 0, ...payload }
+    writeDemo(DEMO_KEYS.videos, [item, ...list])
+    return item
+  }
+  const { data, error } = await supabase.from('videos').insert(payload).select().single()
+  if (error) throw new Error(error.message)
+  return data
+}
+
+export async function updateVideo(id, payload) {
+  if (!isSupabaseConfigured) {
+    const list = readDemo(DEMO_KEYS.videos, fallbackVideos)
+    const next = list.map((item) => (item.id === id ? { ...item, ...payload } : item))
+    writeDemo(DEMO_KEYS.videos, next)
+    return next.find((item) => item.id === id)
+  }
+  const { data, error } = await supabase.from('videos').update(payload).eq('id', id).select().single()
+  if (error) throw new Error(error.message)
+  return data
+}
+
+export async function deleteVideo(id) {
+  if (!isSupabaseConfigured) {
+    const list = readDemo(DEMO_KEYS.videos, fallbackVideos)
+    writeDemo(DEMO_KEYS.videos, list.filter((item) => item.id !== id))
+    return
+  }
+  const { error } = await supabase.from('videos').delete().eq('id', id)
   if (error) throw new Error(error.message)
 }
 

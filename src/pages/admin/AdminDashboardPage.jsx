@@ -1,30 +1,33 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Image, MessageSquareQuote, Package, RotateCcw, Settings } from 'lucide-react'
+import { ArrowRight, Film, Image, MessageSquareQuote, Package, RotateCcw, Settings } from 'lucide-react'
 import {
   getAdminPackages,
   getAdminPortfolios,
   getAdminTestimonials,
+  getAdminVideos,
   resetDemoData,
 } from '../../services/cmsService'
 import { useAuth } from '../../context/AuthContext'
 
 export default function AdminDashboardPage() {
   const { isSupabaseConfigured } = useAuth()
-  const [stats, setStats] = useState({ portfolios: 0, featured: 0, packages: 0, testimonials: 0 })
+  const [stats, setStats] = useState({ portfolios: 0, featured: 0, videos: 0, packages: 0, testimonials: 0 })
   const [loading, setLoading] = useState(true)
 
   const loadStats = async () => {
     setLoading(true)
     try {
-      const [pf, pk, ts] = await Promise.all([
+      const [pf, vid, pk, ts] = await Promise.all([
         getAdminPortfolios(),
+        getAdminVideos(),
         getAdminPackages(),
         getAdminTestimonials(),
       ])
       setStats({
         portfolios: pf.length,
         featured: pf.filter((p) => p.is_featured).length,
+        videos: vid.filter((v) => v.is_active !== false).length,
         packages: pk.filter((p) => p.is_active).length,
         testimonials: ts.filter((t) => t.is_active).length,
       })
@@ -67,15 +70,10 @@ export default function AdminDashboardPage() {
       {/* Ringkasan Angka */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          { label: 'Total Foto Portofolio', value: stats.portfolios, sub: `${stats.featured} tampil di beranda`, to: '/admin/portfolio' },
+          { label: 'Portofolio Foto', value: stats.portfolios, sub: `${stats.featured} tampil di beranda`, to: '/admin/portfolio' },
+          { label: 'Video & Reels', value: stats.videos, sub: 'TikTok · IG Reels · YouTube', to: '/admin/videos' },
           { label: 'Paket Aktif', value: stats.packages, sub: 'Mulai dari & Request Pricelist', to: '/admin/packages' },
           { label: 'Testimoni Aktif', value: stats.testimonials, sub: 'Tampil di halaman depan', to: '/admin/testimonials' },
-          {
-            label: 'Status Penyimpanan',
-            value: isSupabaseConfigured ? 'Cloud' : 'Lokal',
-            sub: isSupabaseConfigured ? 'Supabase PostgreSQL' : 'Demo Browser',
-            to: '/admin/settings',
-          },
         ].map((item) => (
           <Link
             key={item.label}
@@ -100,6 +98,13 @@ export default function AdminDashboardPage() {
             to: '/admin/portfolio',
             icon: Image,
             action: 'Kelola Portofolio',
+          },
+          {
+            title: 'Kelola Video & Reels',
+            desc: 'Tempel link TikTok, Instagram Reels, atau YouTube Highlight + cover thumbnail untuk section Motion & Reels.',
+            to: '/admin/videos',
+            icon: Film,
+            action: 'Kelola Video',
           },
           {
             title: 'Atur Paket & Mode Harga Hybrid',

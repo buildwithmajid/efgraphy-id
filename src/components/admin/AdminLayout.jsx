@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import {
   ArrowUpRight,
+  Film,
   Image,
   LayoutDashboard,
   LogOut,
@@ -15,7 +16,8 @@ import { useAuth } from '../../context/AuthContext'
 
 const LINKS = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/admin/portfolio', label: 'Portofolio', icon: Image },
+  { to: '/admin/portfolio', label: 'Portofolio Foto', icon: Image },
+  { to: '/admin/videos', label: 'Video & Reels', icon: Film },
   { to: '/admin/packages', label: 'Paket & Harga', icon: Package },
   { to: '/admin/testimonials', label: 'Testimoni', icon: MessageSquareQuote },
   { to: '/admin/settings', label: 'Pengaturan', icon: Settings },

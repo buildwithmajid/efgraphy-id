@@ -7,10 +7,10 @@ import { buildWaLink, formatRupiah, WA_MESSAGES } from '../../lib/whatsapp'
 const SERVICE_SLUGS = ['wedding', 'prewedding', 'engagement', 'birthday-wisuda']
 
 const FALLBACK_COVERS = {
-  wedding: '/placeholders/wedding-1.jpg',
-  prewedding: '/placeholders/prewedding-1.jpg',
-  engagement: '/placeholders/engagement-1.jpg',
-  'birthday-wisuda': '/placeholders/birthday-1.jpg',
+  wedding: '/portfolio/wedding-1.jpg',
+  prewedding: '/portfolio/prewedding-1.jpg',
+  engagement: '/portfolio/engagement-1.jpg',
+  'birthday-wisuda': '/portfolio/birthday-1.jpg',
 }
 
 export default function ServicesSection({ categories, portfolios, packages, settings }) {

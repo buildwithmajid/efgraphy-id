@@ -245,7 +245,7 @@ export default function AdminPortfolioPage() {
                   type="text"
                   value={form.image_url}
                   onChange={(e) => setForm((p) => ({ ...p, image_url: e.target.value }))}
-                  placeholder="/placeholders/wedding-1.jpg atau https://..."
+                  placeholder="/portfolio/wedding-1.jpg atau https://..."
                   className="mt-1 block min-h-10 w-full rounded-lg border border-sand bg-cream/40 px-3 text-xs text-ink focus:border-ink focus:bg-paper focus:outline-none"
                 />
               </div>
