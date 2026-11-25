@@ -87,3 +87,21 @@
     transform: translate3d(0, 6px, 0);
   }
 }
+
+@keyframes efg-filmstrip-loop {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.efg-filmstrip-track {
+  animation: efg-filmstrip-loop 34s linear infinite;
+  will-change: transform;
+}
+
+.efg-filmstrip-shell:hover .efg-filmstrip-track {
+  animation-play-state: paused;
+}
