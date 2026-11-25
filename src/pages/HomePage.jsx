@@ -4,11 +4,13 @@ import Footer from '../components/common/Footer'
 import FloatingWhatsApp from '../components/common/FloatingWhatsApp'
 import HeroSection from '../components/home/HeroSection'
 import ServicesSection from '../components/home/ServicesSection'
+import FilmstripDivider from '../components/home/FilmstripDivider'
 import Portfolio3DShowcase from '../components/home/Portfolio3DShowcase'
 import MotionReelsSection from '../components/home/MotionReelsSection'
 import PricingSection from '../components/home/PricingSection'
 import TestimonialsSection from '../components/home/TestimonialsSection'
 import LocationSection from '../components/home/LocationSection'
+import ClosingBanner from '../components/home/ClosingBanner'
 import LightboxModal from '../components/portfolio/LightboxModal'
 import VideoModal from '../components/portfolio/VideoModal'
 import {
@@ -73,6 +75,7 @@ export default function HomePage({ revealed, onReplayIntro }) {
           packages={packages}
           settings={settings}
         />
+        <FilmstripDivider items={portfolios} onOpenLightbox={setLightboxIndex} />
         <Portfolio3DShowcase
           items={portfolios}
           categoryMap={categoryMap}
@@ -84,8 +87,13 @@ export default function HomePage({ revealed, onReplayIntro }) {
           onSelectVideo={setActiveVideo}
         />
         <PricingSection packages={packages} settings={settings} />
-        <TestimonialsSection testimonials={testimonials} settings={settings} />
+        <TestimonialsSection
+          testimonials={testimonials}
+          portfolios={portfolios}
+          settings={settings}
+        />
         <LocationSection settings={settings} />
+        <ClosingBanner settings={settings} onReplayIntro={onReplayIntro} />
       </main>
 
       <Footer settings={settings} onReplayIntro={onReplayIntro} />

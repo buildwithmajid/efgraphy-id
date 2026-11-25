@@ -102,6 +102,18 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
           className="relative mt-14 flex h-[410px] cursor-grab select-none items-center justify-center active:cursor-grabbing sm:h-[490px]"
           style={{ perspective: '1500px', touchAction: 'pan-y' }}
         >
+          {/* Studio Floor Reflection / Depth Shadow Plane di bawah kartu utama */}
+          <div
+            aria-hidden="true"
+            style={{
+              transform: `translate3d(${(dragOffset * 0.14).toFixed(1)}px, 0, 0)`,
+              transition: dragRef.current.active ? 'none' : 'transform 650ms cubic-bezier(0.16, 1, 0.3, 1)',
+              background:
+                'radial-gradient(ellipse 52% 65% at 50% 50%, rgba(194,166,126,0.16), rgba(0,0,0,0.45) 55%, transparent 78%)',
+            }}
+            className="pointer-events-none absolute bottom-1 left-1/2 h-14 w-[320px] -translate-x-1/2 rounded-full blur-md sm:w-[440px]"
+          />
+
           {items.map((item, idx) => {
             const rel = getRelativeOffset(idx)
             const shifted = rel + dragOffset / 260
@@ -166,7 +178,7 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
           })}
         </div>
 
-        {/* Info Foto Aktif + Navigasi + Status Bar (Stillhaus style) */}
+        {/* Info Foto Aktif + Optical Focus Scale + Navigasi */}
         <div className="mt-8 flex flex-col items-center justify-between gap-6 border-t border-cream/12 pt-6 sm:flex-row">
           <div className="text-center sm:text-left">
             <p className="font-serif text-2xl font-medium text-cream">{currentItem.title}</p>
@@ -174,6 +186,31 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
               <span className="text-champagne">{categoryMap?.[currentItem.category_id] || 'Portofolio'}</span>
               {currentItem.location ? ` · ${currentItem.location}` : ''}
             </p>
+          </div>
+
+          {/* Skala Fokus Lensa Interaktif */}
+          <div className="hidden flex-col items-center lg:flex" aria-hidden="true">
+            <div className="flex items-center gap-5 font-mono text-[9.5px] tracking-[0.12em] text-cream/40 tabular-nums">
+              <span>0.5m</span>
+              <span>1.2m</span>
+              <span>3m</span>
+              <span>5m</span>
+              <span>∞</span>
+            </div>
+            <div className="relative mt-1.5 flex h-3 w-44 items-end justify-between">
+              {Array.from({ length: 17 }).map((_, i) => (
+                <span
+                  key={i}
+                  className={`w-px ${i % 4 === 0 ? 'h-2.5 bg-cream/45' : 'h-1.5 bg-cream/20'}`}
+                />
+              ))}
+              <span
+                style={{
+                  left: `${count > 1 ? (active / (count - 1)) * 100 : 50}%`,
+                }}
+                className="absolute -top-0.5 h-3.5 w-0.5 -translate-x-1/2 rounded-full bg-champagne transition-[left] duration-500 ease-out"
+              />
+            </div>
           </div>
 
           <div className="flex items-center gap-4">

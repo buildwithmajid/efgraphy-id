@@ -11,6 +11,7 @@ export default function TiltCard({
   maxTilt = 8,
   scale = 1.015,
   glare = true,
+  glareColor = 'rgba(255,250,240,0.22)',
   ...props
 }) {
   const ref = useRef(null)
@@ -60,7 +61,7 @@ export default function TiltCard({
           className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300"
           style={{
             opacity: sheen.opacity,
-            background: `radial-gradient(circle 280px at ${sheen.x}% ${sheen.y}%, rgba(255,250,240,0.22), transparent 65%)`,
+            background: `radial-gradient(circle 280px at ${sheen.x}% ${sheen.y}%, ${glareColor}, transparent 65%)`,
           }}
         />
       )}

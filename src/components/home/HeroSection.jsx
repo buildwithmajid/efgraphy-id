@@ -102,13 +102,16 @@ export default function HeroSection({ settings, portfolios, revealed }) {
           className="relative mx-auto flex h-[400px] w-full max-w-[500px] items-center justify-center sm:h-[460px] lg:col-span-6 lg:h-[470px] xl:h-[510px]"
           style={{ perspective: '1400px' }}
         >
-          {/* Circular Lens Reticle SVG di belakang komposisi foto */}
+          {/* Circular Lens Reticle SVG di belakang komposisi foto (berputar halus seperti cincin fokus) */}
           <svg
             aria-hidden="true"
             viewBox="0 0 420 420"
             className="pointer-events-none absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 text-ink/15 sm:h-[400px] sm:w-[400px] xl:h-[430px] xl:w-[430px]"
           >
-            <circle cx="210" cy="210" r="196" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4 6" />
+            <g style={{ transformOrigin: '210px 210px', animation: 'efg-reticle-spin 54s linear infinite' }}>
+              <circle cx="210" cy="210" r="196" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4 6" />
+              <circle cx="210" cy="210" r="184" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="1 11" />
+            </g>
             <circle cx="210" cy="210" r="168" fill="none" stroke="currentColor" strokeWidth="0.75" />
             <line x1="210" y1="6" x2="210" y2="24" stroke="currentColor" strokeWidth="1" />
             <line x1="210" y1="396" x2="210" y2="414" stroke="currentColor" strokeWidth="1" />
@@ -116,20 +119,25 @@ export default function HeroSection({ settings, portfolios, revealed }) {
             <line x1="396" y1="210" x2="414" y2="210" stroke="currentColor" strokeWidth="1" />
           </svg>
 
-          {/* Lapisan Belakang (Depth-of-Field lembut) */}
+          {/* Lapisan Belakang (Depth-of-Field lembut + ambient breathing) */}
           <motion.div
             style={{
               y: backY,
               transform: `perspective(1200px) translate3d(${(mouse.x * -18).toFixed(1)}px, ${(mouse.y * -14).toFixed(1)}px, -90px) rotateY(${(-14 + mouse.x * 10).toFixed(1)}deg) rotateZ(-4deg)`,
               transition: 'transform 280ms cubic-bezier(0.22, 1, 0.36, 1)',
             }}
-            className="absolute left-1 top-4 z-0 w-[42%] overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_24px_50px_-24px_rgba(24,23,22,0.28)] sm:left-2 sm:top-5"
+            className="absolute left-1 top-4 z-0 w-[42%] sm:left-2 sm:top-5"
           >
-            <img
-              src={heroDetail}
-              alt="Detail persiapan pengantin Efgraphy.id"
-              className="aspect-[3/4] w-full object-cover opacity-90 blur-[0.6px]"
-            />
+            <div
+              style={{ animation: 'efg-float-alt 7.5s ease-in-out infinite' }}
+              className="overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_24px_50px_-24px_rgba(24,23,22,0.28)]"
+            >
+              <img
+                src={heroDetail}
+                alt="Detail persiapan pengantin Efgraphy.id"
+                className="aspect-[3/4] w-full object-cover opacity-90 blur-[0.6px]"
+              />
+            </div>
           </motion.div>
 
           {/* Lapisan Utama Tengah (Tajam & Fokus) */}
@@ -152,20 +160,25 @@ export default function HeroSection({ settings, portfolios, revealed }) {
             />
           </motion.div>
 
-          {/* Lapisan Depan Kanan Bawah (Floating 3D Z-plane) */}
+          {/* Lapisan Depan Kanan Bawah (Floating 3D Z-plane + ambient breathing) */}
           <motion.div
             style={{
               y: midY,
               transform: `perspective(1200px) translate3d(${(mouse.x * 32).toFixed(1)}px, ${(mouse.y * 24).toFixed(1)}px, 80px) rotateY(${(12 + mouse.x * 14).toFixed(1)}deg) rotateZ(3deg)`,
               transition: 'transform 180ms cubic-bezier(0.22, 1, 0.36, 1)',
             }}
-            className="absolute bottom-2 right-1 z-20 w-[37%] overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_28px_60px_-22px_rgba(24,23,22,0.32)] sm:bottom-3 sm:right-2 sm:w-[39%]"
+            className="absolute bottom-2 right-1 z-20 w-[37%] sm:bottom-3 sm:right-2 sm:w-[39%]"
           >
-            <img
-              src={heroSecondary}
-              alt="Prewedding golden hour Efgraphy.id"
-              className="aspect-[3/4] w-full object-cover"
-            />
+            <div
+              style={{ animation: 'efg-float-slow 6.4s ease-in-out infinite' }}
+              className="overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_28px_60px_-22px_rgba(24,23,22,0.32)]"
+            >
+              <img
+                src={heroSecondary}
+                alt="Prewedding golden hour Efgraphy.id"
+                className="aspect-[3/4] w-full object-cover"
+              />
+            </div>
           </motion.div>
         </motion.div>
       </div>
