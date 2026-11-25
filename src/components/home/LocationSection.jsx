@@ -7,6 +7,9 @@ const AREAS = ['Kendal', 'Semarang', 'Batang', 'Pekalongan', 'Luar Kota (Request
 
 export default function LocationSection({ settings }) {
   const waHref = buildWaLink(WA_MESSAGES.consult, settings?.whatsapp_number)
+  const mapQuery = encodeURIComponent(
+    settings?.address || 'Jl. KH. Mukhsin, Tegorejo, Pegandon, Kendal, Jawa Tengah 51357',
+  )
 
   return (
     <section id="lokasi" className="efg-cv-auto scroll-mt-12 border-t border-sand bg-cream py-14 sm:py-20">
@@ -63,7 +66,7 @@ export default function LocationSection({ settings }) {
           <div className="overflow-hidden rounded-sm border border-sand bg-paper p-2 shadow-[0_24px_60px_-30px_rgba(24,23,22,0.18)]">
             <iframe
               title="Lokasi Studio Efgraphy.id di Pegandon, Kendal"
-              src="https://www.google.com/maps?q=Jl.+KH.+Mukhsin,+Tegorejo,+Pegandon,+Kendal,+Jawa+Tengah+51357&output=embed"
+              src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="h-[340px] w-full rounded-sm border-0 grayscale-[20%] contrast-[1.03] sm:h-[420px]"

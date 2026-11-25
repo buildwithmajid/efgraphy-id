@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer'
 import FloatingWhatsApp from '../components/common/FloatingWhatsApp'
@@ -31,6 +32,7 @@ import {
 } from '../data/fallbackData'
 
 export default function HomePage({ revealed, onReplayIntro }) {
+  const { hash } = useLocation()
   const [settings, setSettings] = useState(fallbackSettings)
   const [categories, setCategories] = useState(fallbackCategories)
   const [portfolios, setPortfolios] = useState(fallbackPortfolios)
@@ -39,6 +41,20 @@ export default function HomePage({ revealed, onReplayIntro }) {
   const [testimonials, setTestimonials] = useState(fallbackTestimonials)
   const [lightboxIndex, setLightboxIndex] = useState(null)
   const [activeVideo, setActiveVideo] = useState(null)
+
+  useEffect(() => {
+    document.title = 'Efgraphy.id | Fotografer & Videografer Wedding, Prewedding, Lamaran di Kendal & Semarang'
+  }, [])
+
+  useEffect(() => {
+    if (!hash) return
+    const targetId = hash.replace('#', '')
+    let frameId = requestAnimationFrame(() => {
+      const el = document.getElementById(targetId)
+      if (el) el.scrollIntoView({ behavior: 'smooth' })
+    })
+    return () => cancelAnimationFrame(frameId)
+  }, [hash])
 
   useEffect(() => {
     Promise.all([

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import {
   ArrowUpRight,
@@ -27,6 +27,10 @@ export default function AdminLayout() {
   const { user, signOut, isSupabaseConfigured } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    document.title = 'Admin Studio | Efgraphy.id'
+  }, [])
 
   const handleLogout = async () => {
     await signOut()
@@ -83,6 +87,7 @@ export default function AdminLayout() {
             <Link
               to="/"
               target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-lg border border-sand bg-paper px-3 text-xs font-medium text-ink transition-colors hover:border-ink"
             >
               Lihat Web

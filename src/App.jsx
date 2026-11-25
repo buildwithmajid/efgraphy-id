@@ -2,9 +2,11 @@ import { lazy, Suspense, useCallback, useState } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/admin/ProtectedRoute'
+import ErrorBoundary from './components/common/ErrorBoundary'
 import HomePage from './pages/HomePage'
 
 const PortfolioPage = lazy(() => import('./pages/PortfolioPage'))
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const IntroExperience = lazy(() => import('./components/intro/IntroExperience'))
 const AdminLayout = lazy(() => import('./components/admin/AdminLayout'))
 const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'))
@@ -61,45 +63,44 @@ export default function App() {
   }, [pathname, navigate])
 
   return (
-    <AuthProvider>
-      <Suspense fallback={<AdminLoader />}>
-        <Routes>
-          <Route
-            path="/"
-            element={<HomePage revealed={revealed} onReplayIntro={replayIntro} />}
-          />
-          <Route path="/portfolio" element={<PortfolioPage onReplayIntro={replayIntro} />} />
+    <ErrorBoundary>
+      <AuthProvider>
+        <Suspense fallback={<AdminLoader />}>
+          <Routes>
+            <Route
+              path="/"
+              element={<HomePage revealed={revealed} onReplayIntro={replayIntro} />}
+            />
+            <Route path="/portfolio" element={<PortfolioPage onReplayIntro={replayIntro} />} />
 
-          {/* Rute Admin CMS */}
-          <Route path="/admin/login" element={<AdminLoginPage />} />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<AdminDashboardPage />} />
-            <Route path="portfolio" element={<AdminPortfolioPage />} />
-            <Route path="videos" element={<AdminVideosPage />} />
-            <Route path="packages" element={<AdminPackagesPage />} />
-            <Route path="testimonials" element={<AdminTestimonialsPage />} />
-            <Route path="settings" element={<AdminSettingsPage />} />
-          </Route>
+            {/* Rute Admin CMS */}
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <AdminLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<AdminDashboardPage />} />
+              <Route path="portfolio" element={<AdminPortfolioPage />} />
+              <Route path="videos" element={<AdminVideosPage />} />
+              <Route path="packages" element={<AdminPackagesPage />} />
+              <Route path="testimonials" element={<AdminTestimonialsPage />} />
+              <Route path="settings" element={<AdminSettingsPage />} />
+            </Route>
 
-          <Route
-            path="*"
-            element={<HomePage revealed={revealed} onReplayIntro={replayIntro} />}
-          />
-        </Routes>
-      </Suspense>
-
-      {showIntro && (
-        <Suspense fallback={<div className="fixed inset-0 z-[70] bg-obsidian" />}>
-          <IntroExperience onReveal={handleReveal} onFinish={handleFinish} />
+            <Route path="*" element={<NotFoundPage onReplayIntro={replayIntro} />} />
+          </Routes>
         </Suspense>
-      )}
-    </AuthProvider>
+
+        {showIntro && (
+          <Suspense fallback={<div className="fixed inset-0 z-[70] bg-obsidian" />}>
+            <IntroExperience onReveal={handleReveal} onFinish={handleFinish} />
+          </Suspense>
+        )}
+      </AuthProvider>
+    </ErrorBoundary>
   )
 }

@@ -32,6 +32,7 @@ export default function PortfolioPage({ onReplayIntro }) {
   const [activeVideo, setActiveVideo] = useState(null)
 
   useEffect(() => {
+    document.title = 'Galeri Portofolio | Efgraphy.id'
     window.scrollTo(0, 0)
     Promise.all([getSettings(), getCategories(), getPortfolios(), getVideos()]).then(([s, c, p, v]) => {
       setSettings(s)
@@ -192,6 +193,7 @@ export default function PortfolioPage({ onReplayIntro }) {
                           src={video.thumbnail_url}
                           alt={video.title}
                           loading="lazy"
+                          decoding="async"
                           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
                         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-obsidian/85 via-obsidian/20 to-obsidian/30" />
@@ -265,6 +267,7 @@ export default function PortfolioPage({ onReplayIntro }) {
                       src={item.image_url}
                       alt={item.title}
                       loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                     <span className="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-obsidian/65 text-cream opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">

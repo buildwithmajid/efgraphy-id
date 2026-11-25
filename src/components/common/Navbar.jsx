@@ -33,10 +33,7 @@ export default function Navbar({ settings }) {
     e.preventDefault()
     setOpen(false)
     if (pathname !== '/') {
-      navigate('/')
-      setTimeout(() => {
-        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
-      }, 120)
+      navigate(`/#${sectionId}`)
     } else {
       document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
     }
