@@ -4,6 +4,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { ContactShadows, Environment, Lightformer } from '@react-three/drei'
 import CameraModel from './CameraModel'
 import { createFlashStarburstTexture } from './cameraTextures'
+import { isLowEndDevice } from '../../lib/deviceTier'
 
 const BASE_DISTANCE = 8.6
 const MODEL_CENTER_Y = 0.06
@@ -238,18 +239,28 @@ function Rig({ phaseRef, reducedMotion, onCameraClick, onReady }) {
           depthTest={false}
         />
       </sprite>
-      <ContactShadows position={[0, -1.25, 0]} scale={7} resolution={512} blur={2.6} far={2.2} opacity={0.75} color="#000000" />
+      {/* Bake bayangan lantai sekali (frames={1}) agar GPU tidak render scene 2x setiap frame */}
+      <ContactShadows
+        position={[0, -1.25, 0]}
+        scale={7}
+        frames={1}
+        resolution={isLowEndDevice() ? 256 : 384}
+        blur={2.4}
+        far={2.2}
+        opacity={0.72}
+        color="#000000"
+      />
     </group>
   )
 }
 
-function StudioLights() {
+function StudioLights({ lowEnd }) {
   return (
     <>
       <ambientLight intensity={0.22} />
       <directionalLight position={[4, 6, 6]} intensity={1.45} color="#fff6ea" />
       <directionalLight position={[-6, 2, -4]} intensity={0.95} color="#c2a67e" />
-      <Environment resolution={256} frames={1}>
+      <Environment resolution={lowEnd ? 128 : 256} frames={1}>
         <Lightformer form="rect" intensity={2.4} position={[0, 6, 1]} rotation-x={HALF} scale={[10, 3, 1]} />
         <Lightformer form="rect" intensity={2.8} color="#fff1dc" position={[-6, 1, 2]} rotation-y={HALF} scale={[2.2, 8, 1]} />
         <Lightformer form="rect" intensity={2.6} color="#fff1dc" position={[6, 1, 2]} rotation-y={-HALF} scale={[2.2, 8, 1]} />
@@ -263,13 +274,19 @@ function StudioLights() {
 }
 
 export default function CameraScene({ phaseRef, reducedMotion, onCameraClick, onReady }) {
+  const lowEnd = useMemo(() => isLowEndDevice(), [])
+
   return (
     <Canvas
       className="!absolute inset-0"
       style={{ touchAction: 'none' }}
-      dpr={[1, 1.75]}
+      dpr={lowEnd ? [1, 1.25] : [1, 1.65]}
       camera={{ position: [0, MODEL_CENTER_Y, BASE_DISTANCE], fov: FOV, near: 0.05, far: 60 }}
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      gl={{
+        antialias: !lowEnd || window.devicePixelRatio < 2,
+        alpha: true,
+        powerPreference: lowEnd ? 'default' : 'high-performance',
+      }}
       onCreated={({ gl, camera }) => {
         gl.toneMapping = THREE.ACESFilmicToneMapping
         gl.toneMappingExposure = 1.08
@@ -277,7 +294,7 @@ export default function CameraScene({ phaseRef, reducedMotion, onCameraClick, on
       }}
     >
       <Suspense fallback={null}>
-        <StudioLights />
+        <StudioLights lowEnd={lowEnd} />
         <Rig phaseRef={phaseRef} reducedMotion={reducedMotion} onCameraClick={onCameraClick} onReady={onReady} />
       </Suspense>
     </Canvas>

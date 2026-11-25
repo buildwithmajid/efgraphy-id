@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 
 function FilmFrame({ item, frameCode, onClick, isDuplicate = false }) {
   return (
@@ -23,6 +23,7 @@ function FilmFrame({ item, frameCode, onClick, isDuplicate = false }) {
             src={item.image_url}
             alt={item.title}
             loading="lazy"
+            decoding="async"
             draggable={false}
             className="h-full w-full object-cover opacity-88 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
           />
@@ -49,6 +50,7 @@ function FilmFrame({ item, frameCode, onClick, isDuplicate = false }) {
  */
 export default function FilmstripDivider({ items = [], onOpenLightbox }) {
   const containerRef = useRef(null)
+  const inView = useInView(containerRef, { margin: '140px 0px' })
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
@@ -75,7 +77,10 @@ export default function FilmstripDivider({ items = [], onOpenLightbox }) {
         }}
         className="efg-filmstrip-shell -mx-12 -rotate-[1.25deg] overflow-hidden border-y border-cream/15 bg-[#161513] py-2.5 shadow-[0_26px_60px_-20px_rgba(0,0,0,0.75)]"
       >
-        <div className="efg-filmstrip-track flex w-max">
+        <div
+          className="efg-filmstrip-track flex w-max"
+          style={{ animationPlayState: inView ? undefined : 'paused' }}
+        >
           {[0, 1].map((copyIdx) => (
             <div
               key={copyIdx}

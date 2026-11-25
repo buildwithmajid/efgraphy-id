@@ -11,26 +11,26 @@ function makeCanvas(w, h) {
   return [c, c.getContext('2d')]
 }
 
-/** Tekstur kulit (leatherette) untuk bumpMap bodi kamera. */
+/** Tekstur kulit (leatherette) untuk bumpMap bodi kamera (ringan & cepat dibuat di startup). */
 export function createLeatherTexture() {
-  const size = 512
+  const size = 256
   const [c, g] = makeCanvas(size, size)
   g.fillStyle = '#808080'
   g.fillRect(0, 0, size, size)
-  // butiran kulit: ribuan bintik lembut terang/gelap
-  for (let i = 0; i < 9000; i++) {
+  // butiran kulit: cukup 2600 titik pada 256px agar identik visualnya tapi ~3.5x lebih cepat di HP
+  for (let i = 0; i < 2600; i++) {
     const x = Math.random() * size
     const y = Math.random() * size
-    const r = 1 + Math.random() * 3.2
+    const r = 0.8 + Math.random() * 1.8
     const v = Math.random() > 0.5 ? 255 : 0
-    g.fillStyle = `rgba(${v},${v},${v},${0.08 + Math.random() * 0.12})`
+    g.fillStyle = `rgba(${v},${v},${v},${0.09 + Math.random() * 0.12})`
     g.beginPath()
     g.arc(x, y, r, 0, Math.PI * 2)
     g.fill()
   }
   const tex = new THREE.CanvasTexture(c)
   tex.wrapS = tex.wrapT = THREE.RepeatWrapping
-  tex.repeat.set(1.6, 1.6)
+  tex.repeat.set(2.4, 2.4)
   return tex
 }
 
@@ -70,8 +70,8 @@ export function createBezelTexture() {
 
 /** Skala jarak fokus di sisi barrel lensa (dibungkus melingkar pada silinder). */
 export function createDistanceScaleTexture() {
-  const w = 2048
-  const h = 128
+  const w = 1024
+  const h = 96
   const [c, g] = makeCanvas(w, h)
   g.fillStyle = '#121111'
   g.fillRect(0, 0, w, h)
@@ -85,11 +85,11 @@ export function createDistanceScaleTexture() {
     labels.forEach((label, i) => {
       const x = (r * labels.length + i + 0.5) * step
       g.fillStyle = label === '∞' ? '#c9ae86' : '#ece6dc'
-      g.font = '600 46px "Plus Jakarta Sans Variable", system-ui, sans-serif'
+      g.font = '600 28px "Plus Jakarta Sans Variable", system-ui, sans-serif'
       g.fillText(label, x, h * 0.42)
       g.fillStyle = 'rgba(236,230,220,0.85)'
-      g.fillRect(x - 1.5, h * 0.74, 3, h * 0.26)
-      g.fillRect(x + step / 2 - 1, h * 0.84, 2, h * 0.16)
+      g.fillRect(x - 1, h * 0.74, 2, h * 0.26)
+      g.fillRect(x + step / 2 - 0.75, h * 0.84, 1.5, h * 0.16)
     })
   }
   const tex = new THREE.CanvasTexture(c)
@@ -97,7 +97,7 @@ export function createDistanceScaleTexture() {
   tex.wrapS = THREE.RepeatWrapping
   tex.center.set(0.5, 0.5)
   tex.rotation = Math.PI
-  tex.anisotropy = 8
+  tex.anisotropy = 4
   return tex
 }
 

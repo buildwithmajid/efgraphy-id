@@ -9,7 +9,7 @@ export default function LocationSection({ settings }) {
   const waHref = buildWaLink(WA_MESSAGES.consult, settings?.whatsapp_number)
 
   return (
-    <section id="lokasi" className="scroll-mt-12 border-t border-sand bg-cream py-14 sm:py-20">
+    <section id="lokasi" className="efg-cv-auto scroll-mt-12 border-t border-sand bg-cream py-14 sm:py-20">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <h2 className="font-serif text-[clamp(2.1rem,4.6vw,3.3rem)] font-medium leading-[1.08] tracking-[-0.015em] text-ink">

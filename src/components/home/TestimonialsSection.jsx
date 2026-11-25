@@ -117,6 +117,7 @@ export default function TestimonialsSection({ testimonials, portfolios = [], set
                     src={photoUrl}
                     alt={`Dokumentasi ${item.event_type || 'klien'} Efgraphy.id`}
                     loading="lazy"
+                    decoding="async"
                     draggable={false}
                     className="h-full w-full object-cover"
                   />

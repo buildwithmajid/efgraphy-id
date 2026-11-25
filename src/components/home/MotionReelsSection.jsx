@@ -61,6 +61,7 @@ export default function MotionReelsSection({ videos, categoryMap, onSelectVideo 
                       src={video.thumbnail_url}
                       alt={video.title}
                       loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                     {parsed.type === 'video' && (

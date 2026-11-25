@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, ChevronLeft, ChevronRight, Expand } from 'lucide-react'
+import { isLowEndDevice } from '../../lib/deviceTier'
 
 /**
  * Katalog Portofolio 3D Curved Arc Showcase (terinspirasi Velto / Indaco / Stillhaus).
@@ -14,6 +15,7 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== 'undefined' ? window.innerWidth < 640 : false,
   )
+  const lowEnd = useMemo(() => isLowEndDevice(), [])
   const dragRef = useRef({ active: false, startX: 0, moved: false })
 
   useEffect(() => {
@@ -128,7 +130,9 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
             const rotateY = shifted * -24
             const scale = Math.max(0.72, 1 - abs * 0.13)
             const opacity = Math.max(0.18, 1 - abs * 0.34)
-            const blur = abs < 0.35 ? 0 : Math.min(3.5, (abs - 0.35) * 1.9)
+            // Hindari animasi CSS filter: blur() di perangkat mobile/low-end atau saat drag agar 60fps murni GPU compositor
+            const useBlur = !lowEnd && !dragRef.current.active && abs >= 0.45
+            const blur = useBlur ? Math.min(2.6, (abs - 0.45) * 1.5) : 0
 
             return (
               <div
@@ -155,7 +159,7 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
                   zIndex: Math.round(30 - abs * 10),
                   transition: dragRef.current.active
                     ? 'none'
-                    : 'transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease, filter 500ms ease',
+                    : 'transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms ease',
                   willChange: 'transform, opacity',
                 }}
                 className="group absolute w-[250px] overflow-hidden rounded-sm border border-cream/20 bg-obsidian-soft shadow-[0_32px_80px_-24px_rgba(0,0,0,0.85)] sm:w-[310px]"
@@ -164,6 +168,8 @@ export default function Portfolio3DShowcase({ items, categoryMap, onOpenLightbox
                   <img
                     src={item.image_url}
                     alt={item.title}
+                    loading="lazy"
+                    decoding="async"
                     draggable={false}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />

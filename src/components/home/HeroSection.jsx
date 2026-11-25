@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import WhatsAppIcon from '../common/WhatsAppIcon'
 import { buildWaLink, WA_MESSAGES } from '../../lib/whatsapp'
@@ -9,7 +9,11 @@ const EASE = [0.16, 1, 0.3, 1]
 
 export default function HeroSection({ settings, portfolios, revealed }) {
   const sectionRef = useRef(null)
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
+  const backTiltRef = useRef(null)
+  const frontTiltRef = useRef(null)
+  const midTiltRef = useRef(null)
+  const rafRef = useRef(0)
+  const inView = useInView(sectionRef, { margin: '100px 0px' })
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -20,16 +24,43 @@ export default function HeroSection({ settings, portfolios, revealed }) {
   const midY = useTransform(scrollYProgress, [0, 1], [0, -96])
   const backY = useTransform(scrollYProgress, [0, 1], [0, -28])
 
+  useEffect(() => () => cancelAnimationFrame(rafRef.current), [])
+
   const heroPrimary = portfolios?.[0]?.image_url || '/portfolio/wedding-1.jpg'
   const heroSecondary = portfolios?.[2]?.image_url || '/portfolio/prewedding-1.jpg'
   const heroDetail = portfolios?.[1]?.image_url || '/portfolio/wedding-2.jpg'
 
+  const applyTilt = (x, y) => {
+    if (backTiltRef.current) {
+      backTiltRef.current.style.transform = `perspective(1200px) translate3d(${(x * -18).toFixed(1)}px, ${(y * -14).toFixed(1)}px, -90px) rotateY(${(-14 + x * 10).toFixed(1)}deg) rotateZ(-4deg)`
+    }
+    if (frontTiltRef.current) {
+      frontTiltRef.current.style.transform = `perspective(1200px) translate3d(${(x * 16).toFixed(1)}px, ${(y * 12).toFixed(1)}px, 20px) rotateY(${(x * 12).toFixed(1)}deg) rotateX(${(-y * 8).toFixed(1)}deg)`
+    }
+    if (midTiltRef.current) {
+      midTiltRef.current.style.transform = `perspective(1200px) translate3d(${(x * 32).toFixed(1)}px, ${(y * 24).toFixed(1)}px, 80px) rotateY(${(12 + x * 14).toFixed(1)}deg) rotateZ(3deg)`
+    }
+  }
+
   const handleMove = (e) => {
     if (e.pointerType === 'touch') return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width - 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5
-    setMouse({ x, y })
+    const section = sectionRef.current
+    if (!section) return
+    const clientX = e.clientX
+    const clientY = e.clientY
+
+    cancelAnimationFrame(rafRef.current)
+    rafRef.current = requestAnimationFrame(() => {
+      const rect = section.getBoundingClientRect()
+      const x = (clientX - rect.left) / rect.width - 0.5
+      const y = (clientY - rect.top) / rect.height - 0.5
+      applyTilt(x, y)
+    })
+  }
+
+  const handleLeave = () => {
+    cancelAnimationFrame(rafRef.current)
+    applyTilt(0, 0)
   }
 
   const rise = (delay) => ({
@@ -38,11 +69,13 @@ export default function HeroSection({ settings, portfolios, revealed }) {
     transition: { duration: 0.9, delay, ease: EASE },
   })
 
+  const idlePlayState = revealed && inView ? 'running' : 'paused'
+
   return (
     <section
       ref={sectionRef}
       onPointerMove={handleMove}
-      onPointerLeave={() => setMouse({ x: 0, y: 0 })}
+      onPointerLeave={handleLeave}
       className="relative overflow-hidden bg-cream pt-24 pb-14 sm:pt-28 sm:pb-16 lg:flex lg:min-h-[min(100dvh,800px)] lg:items-center lg:pt-20 lg:pb-10"
     >
       <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-12 lg:gap-8">
@@ -102,13 +135,19 @@ export default function HeroSection({ settings, portfolios, revealed }) {
           className="relative mx-auto flex h-[400px] w-full max-w-[500px] items-center justify-center sm:h-[460px] lg:col-span-6 lg:h-[470px] xl:h-[510px]"
           style={{ perspective: '1400px' }}
         >
-          {/* Circular Lens Reticle SVG di belakang komposisi foto (berputar halus seperti cincin fokus) */}
+          {/* Circular Lens Reticle SVG di belakang komposisi foto (otomatis jeda saat off-screen) */}
           <svg
             aria-hidden="true"
             viewBox="0 0 420 420"
             className="pointer-events-none absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 text-ink/15 sm:h-[400px] sm:w-[400px] xl:h-[430px] xl:w-[430px]"
           >
-            <g style={{ transformOrigin: '210px 210px', animation: 'efg-reticle-spin 54s linear infinite' }}>
+            <g
+              style={{
+                transformOrigin: '210px 210px',
+                animation: 'efg-reticle-spin 54s linear infinite',
+                animationPlayState: idlePlayState,
+              }}
+            >
               <circle cx="210" cy="210" r="196" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="4 6" />
               <circle cx="210" cy="210" r="184" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="1 11" />
             </g>
@@ -119,65 +158,79 @@ export default function HeroSection({ settings, portfolios, revealed }) {
             <line x1="396" y1="210" x2="414" y2="210" stroke="currentColor" strokeWidth="1" />
           </svg>
 
-          {/* Lapisan Belakang (Depth-of-Field lembut + ambient breathing) */}
-          <motion.div
-            style={{
-              y: backY,
-              transform: `perspective(1200px) translate3d(${(mouse.x * -18).toFixed(1)}px, ${(mouse.y * -14).toFixed(1)}px, -90px) rotateY(${(-14 + mouse.x * 10).toFixed(1)}deg) rotateZ(-4deg)`,
-              transition: 'transform 280ms cubic-bezier(0.22, 1, 0.36, 1)',
-            }}
-            className="absolute left-1 top-4 z-0 w-[42%] sm:left-2 sm:top-5"
-          >
+          {/* Lapisan Belakang */}
+          <motion.div style={{ y: backY }} className="absolute left-1 top-4 z-0 w-[42%] sm:left-2 sm:top-5">
             <div
-              style={{ animation: 'efg-float-alt 7.5s ease-in-out infinite' }}
-              className="overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_24px_50px_-24px_rgba(24,23,22,0.28)]"
+              ref={backTiltRef}
+              style={{
+                transform: 'perspective(1200px) translate3d(0px, 0px, -90px) rotateY(-14deg) rotateZ(-4deg)',
+                transition: 'transform 280ms cubic-bezier(0.22, 1, 0.36, 1)',
+              }}
             >
-              <img
-                src={heroDetail}
-                alt="Detail persiapan pengantin Efgraphy.id"
-                className="aspect-[3/4] w-full object-cover opacity-90 blur-[0.6px]"
-              />
+              <div
+                style={{
+                  animation: 'efg-float-alt 7.5s ease-in-out infinite',
+                  animationPlayState: idlePlayState,
+                }}
+                className="overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_24px_50px_-24px_rgba(24,23,22,0.28)]"
+              >
+                <img
+                  src={heroDetail}
+                  alt="Detail persiapan pengantin Efgraphy.id"
+                  decoding="async"
+                  className="aspect-[3/4] w-full object-cover opacity-85"
+                />
+              </div>
             </div>
           </motion.div>
 
           {/* Lapisan Utama Tengah (Tajam & Fokus) */}
-          <motion.div
-            style={{
-              y: frontY,
-              transform: `perspective(1200px) translate3d(${(mouse.x * 16).toFixed(1)}px, ${(mouse.y * 12).toFixed(1)}px, 20px) rotateY(${(mouse.x * 12).toFixed(1)}deg) rotateX(${(-mouse.y * 8).toFixed(1)}deg)`,
-              transition: 'transform 220ms cubic-bezier(0.22, 1, 0.36, 1)',
-            }}
-            className="relative z-10 w-[54%] overflow-hidden rounded-sm border border-paper bg-paper p-2 shadow-[0_36px_80px_-28px_rgba(24,23,22,0.35)] sm:w-[52%]"
-          >
-            <div className="flex items-center justify-between px-1 pb-1.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-3 sm:text-[10px]">
-              <span>EFGRAPHY · 35MM</span>
-              <span>ƒ/1.4</span>
-            </div>
-            <img
-              src={heroPrimary}
-              alt="Dokumentasi wedding adat Jawa oleh Efgraphy.id"
-              className="aspect-[3/4] w-full object-cover"
-            />
-          </motion.div>
-
-          {/* Lapisan Depan Kanan Bawah (Floating 3D Z-plane + ambient breathing) */}
-          <motion.div
-            style={{
-              y: midY,
-              transform: `perspective(1200px) translate3d(${(mouse.x * 32).toFixed(1)}px, ${(mouse.y * 24).toFixed(1)}px, 80px) rotateY(${(12 + mouse.x * 14).toFixed(1)}deg) rotateZ(3deg)`,
-              transition: 'transform 180ms cubic-bezier(0.22, 1, 0.36, 1)',
-            }}
-            className="absolute bottom-2 right-1 z-20 w-[37%] sm:bottom-3 sm:right-2 sm:w-[39%]"
-          >
+          <motion.div style={{ y: frontY }} className="relative z-10 w-[54%] sm:w-[52%]">
             <div
-              style={{ animation: 'efg-float-slow 6.4s ease-in-out infinite' }}
-              className="overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_28px_60px_-22px_rgba(24,23,22,0.32)]"
+              ref={frontTiltRef}
+              style={{
+                transform: 'perspective(1200px) translate3d(0px, 0px, 20px) rotateY(0deg) rotateX(0deg)',
+                transition: 'transform 220ms cubic-bezier(0.22, 1, 0.36, 1)',
+              }}
+              className="overflow-hidden rounded-sm border border-paper bg-paper p-2 shadow-[0_36px_80px_-28px_rgba(24,23,22,0.35)]"
             >
+              <div className="flex items-center justify-between px-1 pb-1.5 font-mono text-[9.5px] uppercase tracking-[0.12em] text-ink-3 sm:text-[10px]">
+                <span>EFGRAPHY · 35MM</span>
+                <span>ƒ/1.4</span>
+              </div>
               <img
-                src={heroSecondary}
-                alt="Prewedding golden hour Efgraphy.id"
+                src={heroPrimary}
+                alt="Dokumentasi wedding adat Jawa oleh Efgraphy.id"
+                fetchPriority="high"
+                decoding="async"
                 className="aspect-[3/4] w-full object-cover"
               />
+            </div>
+          </motion.div>
+
+          {/* Lapisan Depan Kanan Bawah (Floating 3D Z-plane) */}
+          <motion.div style={{ y: midY }} className="absolute bottom-2 right-1 z-20 w-[37%] sm:bottom-3 sm:right-2 sm:w-[39%]">
+            <div
+              ref={midTiltRef}
+              style={{
+                transform: 'perspective(1200px) translate3d(0px, 0px, 80px) rotateY(12deg) rotateZ(3deg)',
+                transition: 'transform 180ms cubic-bezier(0.22, 1, 0.36, 1)',
+              }}
+            >
+              <div
+                style={{
+                  animation: 'efg-float-slow 6.4s ease-in-out infinite',
+                  animationPlayState: idlePlayState,
+                }}
+                className="overflow-hidden rounded-sm border border-sand bg-paper p-1.5 shadow-[0_28px_60px_-22px_rgba(24,23,22,0.32)]"
+              >
+                <img
+                  src={heroSecondary}
+                  alt="Prewedding golden hour Efgraphy.id"
+                  decoding="async"
+                  className="aspect-[3/4] w-full object-cover"
+                />
+              </div>
             </div>
           </motion.div>
         </motion.div>

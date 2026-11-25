@@ -69,6 +69,7 @@ export default function ServicesSection({ categories, portfolios, packages, sett
                       src={getCover(cat)}
                       alt={`Layanan foto ${cat.name} Efgraphy.id`}
                       loading="lazy"
+                      decoding="async"
                       className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                     <div

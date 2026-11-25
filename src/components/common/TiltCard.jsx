@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 /**
  * Kartu 3D interaktif yang memiringkan permukaan sesuai posisi kursor
  * ditambah kilau cahaya lensa (specular sheen) halus.
+ * Menggunakan mutasi DOM langsung lewat requestAnimationFrame (0 re-render React saat kursor bergerak).
  * Otomatis tidak aktif di perangkat sentuh (touch / coarse pointer).
  */
 export default function TiltCard({
@@ -14,55 +15,68 @@ export default function TiltCard({
   glareColor = 'rgba(255,250,240,0.22)',
   ...props
 }) {
-  const ref = useRef(null)
-  const [style, setStyle] = useState({
-    transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)',
-  })
-  const [sheen, setSheen] = useState({ x: 50, y: 50, opacity: 0 })
+  const cardRef = useRef(null)
+  const glareRef = useRef(null)
+  const rafRef = useRef(0)
+
+  useEffect(() => () => cancelAnimationFrame(rafRef.current), [])
 
   const handleMove = (e) => {
     if (e.pointerType === 'touch') return
-    const el = ref.current
+    const el = cardRef.current
     if (!el) return
-    const rect = el.getBoundingClientRect()
-    const px = (e.clientX - rect.left) / rect.width
-    const py = (e.clientY - rect.top) / rect.height
-    const rotateY = (px - 0.5) * maxTilt * 2
-    const rotateX = (0.5 - py) * maxTilt * 2
+    const clientX = e.clientX
+    const clientY = e.clientY
 
-    setStyle({
-      transform: `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(${scale},${scale},1)`,
-      transition: 'transform 120ms cubic-bezier(0.22, 1, 0.36, 1)',
+    cancelAnimationFrame(rafRef.current)
+    rafRef.current = requestAnimationFrame(() => {
+      const rect = el.getBoundingClientRect()
+      const px = (clientX - rect.left) / rect.width
+      const py = (clientY - rect.top) / rect.height
+      const rotateY = (px - 0.5) * maxTilt * 2
+      const rotateX = (0.5 - py) * maxTilt * 2
+
+      el.style.transition = 'transform 120ms cubic-bezier(0.22, 1, 0.36, 1)'
+      el.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(${scale},${scale},1)`
+
+      if (glare && glareRef.current) {
+        glareRef.current.style.opacity = '1'
+        glareRef.current.style.background = `radial-gradient(circle 280px at ${(px * 100).toFixed(1)}% ${(py * 100).toFixed(1)}%, ${glareColor}, transparent 65%)`
+      }
     })
-    if (glare) setSheen({ x: px * 100, y: py * 100, opacity: 1 })
   }
 
   const handleLeave = () => {
-    setStyle({
-      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)',
-      transition: 'transform 520ms cubic-bezier(0.16, 1, 0.3, 1)',
-    })
-    if (glare) setSheen((s) => ({ ...s, opacity: 0 }))
+    cancelAnimationFrame(rafRef.current)
+    const el = cardRef.current
+    if (el) {
+      el.style.transition = 'transform 520ms cubic-bezier(0.16, 1, 0.3, 1)'
+      el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)'
+    }
+    if (glare && glareRef.current) {
+      glareRef.current.style.opacity = '0'
+    }
   }
 
   return (
     <div
-      ref={ref}
+      ref={cardRef}
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
-      style={{ ...style, transformStyle: 'preserve-3d', willChange: 'transform' }}
+      style={{
+        transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)',
+        transformStyle: 'preserve-3d',
+      }}
       className={`relative ${className}`}
       {...props}
     >
       {children}
       {glare && (
         <div
+          ref={glareRef}
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300"
-          style={{
-            opacity: sheen.opacity,
-            background: `radial-gradient(circle 280px at ${sheen.x}% ${sheen.y}%, ${glareColor}, transparent 65%)`,
-          }}
+          style={{ opacity: 0 }}
         />
       )}
     </div>

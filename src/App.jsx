@@ -3,8 +3,8 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import HomePage from './pages/HomePage'
-import PortfolioPage from './pages/PortfolioPage'
 
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage'))
 const IntroExperience = lazy(() => import('./components/intro/IntroExperience'))
 const AdminLayout = lazy(() => import('./components/admin/AdminLayout'))
 const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'))

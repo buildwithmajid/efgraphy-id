@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, RotateCcw } from 'lucide-react'
 import WhatsAppIcon from '../common/WhatsAppIcon'
@@ -6,24 +6,45 @@ import { buildWaLink, WA_MESSAGES } from '../../lib/whatsapp'
 
 /**
  * Tirai Penutup Editorial Gelap (Dark Editorial Closing Curtain) sebelum Footer.
- * Memberi klimaks visual dengan bingkai viewfinder 3D halus yang merespons kursor.
+ * Memberi klimaks visual dengan bingkai viewfinder 3D halus (mutasi ref rAF, 0 re-render).
  */
 export default function ClosingBanner({ settings, onReplayIntro }) {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
+  const sectionRef = useRef(null)
+  const frameRef = useRef(null)
+  const rafRef = useRef(0)
   const waHref = buildWaLink(WA_MESSAGES.consult, settings?.whatsapp_number)
+
+  useEffect(() => () => cancelAnimationFrame(rafRef.current), [])
 
   const handleMove = (e) => {
     if (e.pointerType === 'touch') return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width - 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5
-    setMouse({ x, y })
+    const section = sectionRef.current
+    const frame = frameRef.current
+    if (!section || !frame) return
+    const clientX = e.clientX
+    const clientY = e.clientY
+
+    cancelAnimationFrame(rafRef.current)
+    rafRef.current = requestAnimationFrame(() => {
+      const rect = section.getBoundingClientRect()
+      const x = (clientX - rect.left) / rect.width - 0.5
+      const y = (clientY - rect.top) / rect.height - 0.5
+      frame.style.transform = `rotateX(${(-y * 4).toFixed(2)}deg) rotateY(${(x * 5).toFixed(2)}deg)`
+    })
+  }
+
+  const handleLeave = () => {
+    cancelAnimationFrame(rafRef.current)
+    if (frameRef.current) {
+      frameRef.current.style.transform = 'rotateX(0deg) rotateY(0deg)'
+    }
   }
 
   return (
     <section
+      ref={sectionRef}
       onPointerMove={handleMove}
-      onPointerLeave={() => setMouse({ x: 0, y: 0 })}
+      onPointerLeave={handleLeave}
       className="relative overflow-hidden border-t border-cream/10 bg-obsidian py-20 text-cream sm:py-28"
       style={{ perspective: '1200px' }}
     >
@@ -39,8 +60,9 @@ export default function ClosingBanner({ settings, onReplayIntro }) {
 
       <div className="relative mx-auto max-w-5xl px-5 sm:px-8">
         <div
+          ref={frameRef}
           style={{
-            transform: `rotateX(${(-mouse.y * 4).toFixed(2)}deg) rotateY(${(mouse.x * 5).toFixed(2)}deg)`,
+            transform: 'rotateX(0deg) rotateY(0deg)',
             transition: 'transform 260ms cubic-bezier(0.22, 1, 0.36, 1)',
             transformStyle: 'preserve-3d',
           }}

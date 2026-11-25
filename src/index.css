@@ -105,3 +105,8 @@
 .efg-filmstrip-shell:hover .efg-filmstrip-track {
   animation-play-state: paused;
 }
+
+.efg-cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}

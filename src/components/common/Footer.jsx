@@ -18,7 +18,7 @@ export default function Footer({ settings, onReplayIntro }) {
   const waHref = buildWaLink(WA_MESSAGES.consult, settings?.whatsapp_number)
 
   return (
-    <footer className="border-t border-sand bg-cream-alt/70">
+    <footer className="efg-cv-auto border-t border-sand bg-cream-alt/70">
       <div className="mx-auto max-w-7xl px-5 pt-16 pb-24 sm:px-8 sm:pb-16">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
