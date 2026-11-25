@@ -93,7 +93,7 @@ export default function HomePage({ revealed, onReplayIntro }) {
           settings={settings}
         />
         <LocationSection settings={settings} />
-        <ClosingBanner settings={settings} onReplayIntro={onReplayIntro} />
+        <ClosingBanner settings={settings} />
       </main>
 
       <Footer settings={settings} onReplayIntro={onReplayIntro} />

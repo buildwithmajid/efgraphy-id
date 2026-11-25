@@ -1,6 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import { ArrowUpRight, RotateCcw } from 'lucide-react'
 import WhatsAppIcon from '../common/WhatsAppIcon'
 import { buildWaLink, WA_MESSAGES } from '../../lib/whatsapp'
 
@@ -8,7 +6,7 @@ import { buildWaLink, WA_MESSAGES } from '../../lib/whatsapp'
  * Tirai Penutup Editorial Gelap (Dark Editorial Closing Curtain) sebelum Footer.
  * Memberi klimaks visual dengan bingkai viewfinder 3D halus (mutasi ref rAF, 0 re-render).
  */
-export default function ClosingBanner({ settings, onReplayIntro }) {
+export default function ClosingBanner({ settings }) {
   const sectionRef = useRef(null)
   const frameRef = useRef(null)
   const rafRef = useRef(0)
@@ -83,7 +81,7 @@ export default function ClosingBanner({ settings, onReplayIntro }) {
             tim Efgraphy.id.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-9 flex justify-center">
             <a
               href={waHref}
               target="_blank"
@@ -93,25 +91,6 @@ export default function ClosingBanner({ settings, onReplayIntro }) {
               <WhatsAppIcon className="size-[18px]" />
               Konsultasi &amp; Cek Tanggal
             </a>
-
-            {onReplayIntro ? (
-              <button
-                type="button"
-                onClick={onReplayIntro}
-                className="inline-flex min-h-12 items-center gap-2 rounded-full border border-cream/20 px-6 text-sm font-medium text-cream transition-colors duration-300 hover:border-champagne hover:text-champagne"
-              >
-                <RotateCcw className="size-4" strokeWidth={1.6} />
-                Putar ulang intro 3D
-              </button>
-            ) : (
-              <Link
-                to="/portfolio"
-                className="inline-flex min-h-12 items-center gap-2 rounded-full border border-cream/20 px-6 text-sm font-medium text-cream transition-colors duration-300 hover:border-champagne hover:text-champagne"
-              >
-                Lihat seluruh galeri
-                <ArrowUpRight className="size-4" />
-              </Link>
-            )}
           </div>
         </div>
       </div>

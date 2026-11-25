@@ -88,7 +88,7 @@ export default function ViewfinderHUD({ phase, ready, onCapture, onSkip }) {
         <CornerMarks className="inset-0" size="h-4 w-4" />
         <span className="absolute left-1/2 top-1/2 h-3 w-px -translate-x-1/2 -translate-y-1/2 bg-current" />
         <span className="absolute left-1/2 top-1/2 h-px w-3 -translate-x-1/2 -translate-y-1/2 bg-current" />
-        <span className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[9.5px] uppercase tracking-[0.12em] sm:left-0 sm:translate-x-0 sm:text-[10px] sm:tracking-[0.14em]">
+        <span className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-center font-mono text-[9.5px] uppercase tracking-[0.12em] sm:text-[10px] sm:tracking-[0.14em]">
           {aligning ? (
             '● SIAP MEMOTRET · SENYUM :)'
           ) : (
