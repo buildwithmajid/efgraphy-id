@@ -227,7 +227,7 @@ export default function AdminPortfolioPage() {
                     <input
                       ref={fileInputRef}
                       type="file"
-                      accept="image/*"
+                      accept="image/jpeg,image/png,image/webp"
                       onChange={handleFileChange}
                       disabled={uploading}
                       className="sr-only"

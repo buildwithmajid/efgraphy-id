@@ -1,11 +1,19 @@
+const ALLOWED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp'])
+const MAX_INPUT_IMAGE_BYTES = 15 * 1024 * 1024 // 15 MB sebelum kompresi
+
 /**
  * Kompres & resize gambar di sisi klien sebelum upload ke Supabase Storage
  * agar foto DSLR/HP berukuran 5-15MB otomatis menjadi ringan (~150-350KB) dan tajam.
+ * Hanya menerima format raster aman (JPG, PNG, WebP) untuk mencegah upload SVG/HTML.
  */
 export function compressImage(file, { maxWidth = 1600, quality = 0.84 } = {}) {
   return new Promise((resolve, reject) => {
-    if (!file || !file.type.startsWith('image/')) {
-      reject(new Error('File harus berupa gambar (JPG, PNG, atau WebP).'))
+    if (!file || !ALLOWED_IMAGE_TYPES.has(file.type)) {
+      reject(new Error('Format tidak diizinkan. Gunakan foto JPG, PNG, atau WebP.'))
+      return
+    }
+    if (file.size > MAX_INPUT_IMAGE_BYTES) {
+      reject(new Error('Ukuran file foto maksimal 15 MB sebelum kompresi.'))
       return
     }
 
@@ -28,10 +36,10 @@ export function compressImage(file, { maxWidth = 1600, quality = 0.84 } = {}) {
         canvas.toBlob(
           (blob) => {
             if (!blob) {
-              resolve(file)
+              reject(new Error('Gagal memproses kompresi gambar. Silakan coba foto lain.'))
               return
             }
-            const baseName = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9-_]/g, '-')
+            const baseName = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9-_]/g, '-') || 'foto'
             const outFile = new File([blob], `${baseName}.webp`, { type: 'image/webp' })
             resolve(outFile)
           },

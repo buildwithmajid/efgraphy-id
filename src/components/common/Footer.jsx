@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRight, MapPin, RotateCcw } from 'lucide-react'
 import WhatsAppIcon from './WhatsAppIcon'
 import { buildWaLink, WA_MESSAGES } from '../../lib/whatsapp'
+import { safeExternalUrl } from '../../lib/safeUrl'
 
 function InstagramIcon({ className = 'size-3.5' }) {
   return (
@@ -43,7 +44,7 @@ export default function Footer({ settings, onReplayIntro }) {
                 Chat WhatsApp
               </a>
               <a
-                href={settings?.instagram_url}
+                href={safeExternalUrl(settings?.instagram_url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-sand bg-paper px-4 text-[13px] text-ink transition-colors hover:border-ink"
@@ -52,7 +53,7 @@ export default function Footer({ settings, onReplayIntro }) {
                 Instagram
               </a>
               <a
-                href={settings?.tiktok_url}
+                href={safeExternalUrl(settings?.tiktok_url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-sand bg-paper px-4 text-[13px] text-ink transition-colors hover:border-ink"
@@ -96,7 +97,7 @@ export default function Footer({ settings, onReplayIntro }) {
               <span>{settings?.address}</span>
             </p>
             <a
-              href={settings?.maps_url}
+              href={safeExternalUrl(settings?.maps_url)}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-medium text-ink underline-offset-4 hover:underline"

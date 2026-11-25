@@ -4,6 +4,7 @@ import { ExternalLink, MapPin, Pause, Play, Volume2, VolumeX, X } from 'lucide-r
 import WhatsAppIcon from '../common/WhatsAppIcon'
 import { buildWaLink } from '../../lib/whatsapp'
 import { parseVideoUrl } from '../../lib/videoEmbed'
+import { safeMediaUrl } from '../../lib/safeUrl'
 
 function NativeVideoPlayer({ src, poster, title }) {
   const videoRef = useRef(null)
@@ -170,7 +171,7 @@ export default function VideoModal({ video, onClose, categoryMap, whatsappNumber
               }`}
             >
               {parsed.type === 'video' ? (
-                <NativeVideoPlayer src={parsed.embedUrl} poster={video.thumbnail_url} title={video.title} />
+                <NativeVideoPlayer src={parsed.embedUrl} poster={safeMediaUrl(video.thumbnail_url)} title={video.title} />
               ) : parsed.type === 'iframe' ? (
                 <iframe
                   title={video.title}
@@ -182,7 +183,7 @@ export default function VideoModal({ video, onClose, categoryMap, whatsappNumber
               ) : (
                 <div className="relative flex h-full w-full flex-col items-center justify-center p-7 text-center">
                   <img
-                    src={video.thumbnail_url}
+                    src={safeMediaUrl(video.thumbnail_url)}
                     alt={video.title}
                     className="absolute inset-0 h-full w-full object-cover opacity-40"
                   />
@@ -196,15 +197,17 @@ export default function VideoModal({ video, onClose, categoryMap, whatsappNumber
                       {parsed.platform} tidak mengizinkan pemutaran penuh tanpa bingkai di luar aplikasinya. Tonton
                       langsung di {parsed.platform} resmi Efgraphy.id.
                     </p>
-                    <a
-                      href={parsed.originalUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-champagne px-6 text-xs font-semibold text-obsidian transition-colors hover:bg-cream"
-                    >
-                      Tonton di {parsed.platform}
-                      <ExternalLink className="size-3.5" />
-                    </a>
+                    {parsed.originalUrl && (
+                      <a
+                        href={parsed.originalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-champagne px-6 text-xs font-semibold text-obsidian transition-colors hover:bg-cream"
+                      >
+                        Tonton di {parsed.platform}
+                        <ExternalLink className="size-3.5" />
+                      </a>
+                    )}
                   </div>
                 </div>
               )}

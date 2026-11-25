@@ -297,9 +297,11 @@ export async function getAdminVideos() {
   return data || []
 }
 
+const ALLOWED_VIDEO_TYPES = new Set(['video/mp4', 'video/webm'])
+
 export async function uploadPortfolioVideo(file) {
-  if (!file || !file.type.startsWith('video/')) {
-    throw new Error('File harus berupa video (MP4 atau WebM).')
+  if (!file || !ALLOWED_VIDEO_TYPES.has(file.type)) {
+    throw new Error('Format video tidak diizinkan. Gunakan file MP4 atau WebM.')
   }
   const maxBytes = 25 * 1024 * 1024 // 25 MB
   if (file.size > maxBytes) {
@@ -310,8 +312,9 @@ export async function uploadPortfolioVideo(file) {
     return URL.createObjectURL(file)
   }
 
-  const safeName = file.name.replace(/[^a-zA-Z0-9-_.]/g, '-')
-  const filePath = `${Date.now()}-${safeName}`
+  const ext = file.type === 'video/webm' ? 'webm' : 'mp4'
+  const baseName = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9-_]/g, '-') || 'video'
+  const filePath = `${Date.now()}-${baseName}.${ext}`
   const { error: uploadError } = await supabase.storage
     .from(VIDEO_BUCKET)
     .upload(filePath, file, { contentType: file.type, upsert: false })

@@ -10,6 +10,7 @@ import {
   uploadPortfolioVideo,
 } from '../../services/cmsService'
 import { parseVideoUrl } from '../../lib/videoEmbed'
+import { safeExternalUrl } from '../../lib/safeUrl'
 
 const EMPTY_FORM = {
   title: '',
@@ -254,7 +255,7 @@ export default function AdminVideosPage() {
                     <input
                       ref={fileInputRef}
                       type="file"
-                      accept="image/*"
+                      accept="image/jpeg,image/png,image/webp"
                       onChange={handleThumbUpload}
                       disabled={uploading}
                       className="sr-only"
@@ -481,7 +482,7 @@ export default function AdminVideosPage() {
                       {video.location ? ` · ${video.location}` : ''}
                     </p>
                     <a
-                      href={video.video_url}
+                      href={safeExternalUrl(video.video_url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mt-2 inline-flex items-center gap-1 text-[11px] text-champagne-deep hover:underline"

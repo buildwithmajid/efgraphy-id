@@ -1,6 +1,7 @@
 import { ArrowUpRight, MapPin } from 'lucide-react'
 import WhatsAppIcon from '../common/WhatsAppIcon'
 import { buildWaLink, WA_MESSAGES } from '../../lib/whatsapp'
+import { safeExternalUrl } from '../../lib/safeUrl'
 
 const AREAS = ['Kendal', 'Semarang', 'Batang', 'Pekalongan', 'Luar Kota (Request)']
 
@@ -46,7 +47,7 @@ export default function LocationSection({ settings }) {
                 Cek Ketersediaan Tanggal
               </a>
               <a
-                href={settings?.maps_url}
+                href={safeExternalUrl(settings?.maps_url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-sand px-4 text-[13px] text-ink transition-colors hover:border-ink"

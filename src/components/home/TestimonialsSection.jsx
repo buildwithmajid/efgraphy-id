@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react'
+import { safeExternalUrl } from '../../lib/safeUrl'
 
 export default function TestimonialsSection({ testimonials, settings }) {
   if (!testimonials?.length) return null
@@ -11,7 +12,7 @@ export default function TestimonialsSection({ testimonials, settings }) {
             Cerita hangat dari klien kami.
           </h2>
           <a
-            href={settings?.maps_url}
+            href={safeExternalUrl(settings?.maps_url)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-10 items-center gap-1.5 text-[13.5px] font-medium text-ink underline-offset-4 transition-colors hover:text-wa hover:underline"

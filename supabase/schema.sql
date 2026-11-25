@@ -72,45 +72,64 @@ create table if not exists public.site_settings (
   updated_at timestamptz not null default now()
 );
 
+-- ---------- Helper Verifikasi Admin ----------
+-- Hanya email admin terdaftar yang boleh mengubah data & storage,
+-- sehingga jika suatu saat public signup tidak sengaja aktif, akun baru tetap ditolak.
+create or replace function public.is_efgraphy_admin()
+returns boolean
+language sql
+stable
+set search_path = ''
+as $$
+  select auth.role() = 'authenticated'
+    and lower(coalesce(auth.jwt() ->> 'email', '')) = 'admin@efgraphy.id';
+$$;
+
 -- ---------- Row Level Security ----------
-alter table public.categories   enable row level security;
-alter table public.portfolios   enable row level security;
-alter table public.packages     enable row level security;
-alter table public.testimonials enable row level security;
-alter table public.videos       enable row level security;
+alter table public.categories    enable row level security;
+alter table public.portfolios    enable row level security;
+alter table public.packages      enable row level security;
+alter table public.testimonials  enable row level security;
+alter table public.videos        enable row level security;
 alter table public.site_settings enable row level security;
 
 -- Publik: hanya baca
-create policy "public read categories"   on public.categories   for select using (true);
-create policy "public read portfolios"   on public.portfolios   for select using (true);
-create policy "public read packages"     on public.packages     for select using (is_active or auth.role() = 'authenticated');
-create policy "public read testimonials" on public.testimonials for select using (is_active or auth.role() = 'authenticated');
-create policy "public read videos"       on public.videos       for select using (is_active or auth.role() = 'authenticated');
+create policy "public read categories"   on public.categories    for select using (true);
+create policy "public read portfolios"   on public.portfolios    for select using (true);
+create policy "public read packages"     on public.packages      for select using (is_active or public.is_efgraphy_admin());
+create policy "public read testimonials" on public.testimonials  for select using (is_active or public.is_efgraphy_admin());
+create policy "public read videos"       on public.videos        for select using (is_active or public.is_efgraphy_admin());
 create policy "public read settings"     on public.site_settings for select using (true);
 
--- Admin (login): kelola semua
-create policy "admin write categories"   on public.categories   for all to authenticated using (true) with check (true);
-create policy "admin write portfolios"   on public.portfolios   for all to authenticated using (true) with check (true);
-create policy "admin write packages"     on public.packages     for all to authenticated using (true) with check (true);
-create policy "admin write testimonials" on public.testimonials for all to authenticated using (true) with check (true);
-create policy "admin write videos"       on public.videos       for all to authenticated using (true) with check (true);
-create policy "admin write settings"     on public.site_settings for all to authenticated using (true) with check (true);
+-- Admin: hanya email admin resmi yang boleh tulis/ubah/hapus
+create policy "admin write categories"   on public.categories    for all to authenticated using (public.is_efgraphy_admin()) with check (public.is_efgraphy_admin());
+create policy "admin write portfolios"   on public.portfolios    for all to authenticated using (public.is_efgraphy_admin()) with check (public.is_efgraphy_admin());
+create policy "admin write packages"     on public.packages      for all to authenticated using (public.is_efgraphy_admin()) with check (public.is_efgraphy_admin());
+create policy "admin write testimonials" on public.testimonials  for all to authenticated using (public.is_efgraphy_admin()) with check (public.is_efgraphy_admin());
+create policy "admin write videos"       on public.videos        for all to authenticated using (public.is_efgraphy_admin()) with check (public.is_efgraphy_admin());
+create policy "admin write settings"     on public.site_settings for all to authenticated using (public.is_efgraphy_admin()) with check (public.is_efgraphy_admin());
 
--- ---------- Storage bucket foto & video ----------
-insert into storage.buckets (id, name, public)
+-- ---------- Storage bucket foto & video (dibatasi tipe & ukuran di sisi server) ----------
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values
-  ('portfolio-images', 'portfolio-images', true),
-  ('portfolio-videos', 'portfolio-videos', true)
-on conflict (id) do nothing;
+  ('portfolio-images', 'portfolio-images', true, 5242880, array['image/jpeg', 'image/png', 'image/webp']),
+  ('portfolio-videos', 'portfolio-videos', true, 26214400, array['video/mp4', 'video/webm'])
+on conflict (id) do update set
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
 
 create policy "public read portfolio images" on storage.objects
   for select using (bucket_id in ('portfolio-images', 'portfolio-videos'));
 create policy "admin upload portfolio images" on storage.objects
-  for insert to authenticated with check (bucket_id in ('portfolio-images', 'portfolio-videos'));
+  for insert to authenticated
+  with check (bucket_id in ('portfolio-images', 'portfolio-videos') and public.is_efgraphy_admin());
 create policy "admin update portfolio images" on storage.objects
-  for update to authenticated using (bucket_id in ('portfolio-images', 'portfolio-videos'));
+  for update to authenticated
+  using (bucket_id in ('portfolio-images', 'portfolio-videos') and public.is_efgraphy_admin())
+  with check (bucket_id in ('portfolio-images', 'portfolio-videos') and public.is_efgraphy_admin());
 create policy "admin delete portfolio images" on storage.objects
-  for delete to authenticated using (bucket_id in ('portfolio-images', 'portfolio-videos'));
+  for delete to authenticated
+  using (bucket_id in ('portfolio-images', 'portfolio-videos') and public.is_efgraphy_admin());
 
 -- ---------- Data awal ----------
 insert into public.categories (name, slug, description, sort_order) values
