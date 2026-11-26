@@ -43,7 +43,7 @@ export default function HomePage({ revealed, onReplayIntro }) {
   const [activeVideo, setActiveVideo] = useState(null)
 
   useEffect(() => {
-    document.title = 'Efgraphy.id | Fotografer & Videografer Wedding, Prewedding, Lamaran di Kendal & Semarang'
+    document.title = 'Efgraphy.id | Fotografer & Videografer Kendal Semarang'
   }, [])
 
   useEffect(() => {
